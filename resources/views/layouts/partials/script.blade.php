@@ -36,6 +36,9 @@
 {{-- summernote --}}
 <script src="{{ asset('asset/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
+<!-- Bootstrap Switch -->
+<script src="{{asset('asset')}}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
 
@@ -83,3 +86,5 @@
     });
 </script>
 @stack('js')
+@stack('vendor-scripts')
+@stack('page-scripts')

@@ -19,12 +19,4 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
 
-
-Route::middleware('auth')->group(function(){
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::get('expenses/update_status', [ExpenseController::class, 'updateStatus'])->name('expense.update_status');
-    Route::resource('/expenses', ExpenseController::class);
-});

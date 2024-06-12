@@ -21,6 +21,10 @@
     {{-- summernote --}}
     <link rel="stylesheet" href="{{ asset('asset/plugins/summernote/summernote-bs4.min.css') }}">
 
+    {{-- ace --}}
+    <link rel="stylesheet" href="{{ asset('asset/dist/css/ace.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('asset/dist/css/customace.css') }}"> --}}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
 
 
@@ -33,4 +37,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
         type="text/css" media="screen" />
     @stack('css')
+    @stack('page-styles')
+
 </head>
