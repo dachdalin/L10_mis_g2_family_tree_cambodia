@@ -13,7 +13,13 @@
         @include('layouts.partials.sidebar')
         <div class="content-wrapper">
 
-            @yield('content')
+            <section class="content-header">
+                @yield('breadcrumb')
+              </section>
+
+            <section class="content">
+                @yield('content')
+            </section>
 
         </div>
 
