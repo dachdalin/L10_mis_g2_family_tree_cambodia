@@ -116,7 +116,70 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-  </div>
+  {{-- </div>
+  <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header text-white border-0">
+              <h4><span><i class="fas fa-user-secret"></i></span>User Trashed Lists</h4>
+              <div class="mb-2 mb-sm-0 ">
+                <a id="restoreAllObject" href="{{ route('admin.'.$crudRoutePath.'.restoreAll') }}" class="btn btn-info px-3 d-block w-100 text-95  border-2 brc-black-tp10">
+                  Restore <span class="d-sm-none d-md-inline"></span>All User
+                </a>
+              </div>
+            </div>
+            <div class="card-body">
+
+
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered zero-configuration">
+                    <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>name</th>
+                          <th>Code</th>
+                          <th>Delete At</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="objectListTrashed">
+                      @foreach ($district_trash as $row)
+                        <tr id="tr_object_id_{{ $row->id }}" class="bgc-h-orange-l4">
+                          <td>{{ $row->id }}</td>
+                          <td>{{ $row->name }}</td>
+                          <td>{{ $row->district_code }}</td>
+                          <td>{{ date('d-M-Y',strtotime($row->delete_at)) }}</td>
+                          <td>
+                            <input id="status" name="status" data-id="{{ $row->id }}" {{ $row->status?'checked':'' }} title="Status" type="checkbox" class="ace-switch input-lg ace-switch-yesno bgc-green-d2 text-grey-m2" />
+                          </td>
+                          <td>
+                            <div class="action-buttons">
+
+                                  <a id="restoreObject" href="{{ route('admin.'.$crudRoutePath.'.restore', $row->id) }}" class="btn btn-success btn-sm">Restore</a>
+                                  <a id="objectDelete" data-id="{{ $row->id }}" href="{{ route('admin.'.$crudRoutePath.'.destroy',$row->id) }}" class="text-danger-m1 mx-1 objectDelete"><i class="far fa-trash-alt text-105"></i></a>
+
+                            </div>
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Code</th>
+                          <th>Delete At</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div> --}}
 
   @include('backend.district.templates.crudModal')
 @endsection

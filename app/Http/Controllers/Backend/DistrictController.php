@@ -27,8 +27,9 @@ class DistrictController extends Controller
         $data['prefix']        = $this->prefix;
         $data['updateMode']    = $this->updateMode;
         $data['crudRoutePath'] = $this->crudRoutePath;
-        $data['districts']     = District::all();
+        $data['districts']     = District::withoutTrashed()->get();
         $data['provices']      = Province::pluck('name','id');
+        $data['district_trash'] = District::onlyTrashed()->get();
 
         return view('backend.district.index',$data);
     }
