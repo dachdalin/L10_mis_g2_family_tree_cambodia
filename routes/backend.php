@@ -26,7 +26,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('roles/changeStatus',[App\Http\Controllers\Backend\RolesController::class,'changeStatus'])->name('roles.changeStatus');
     Route::resource('roles', App\Http\Controllers\Backend\RolesController::class)->except('create','update');
 
+    Route::get('provinces/changeStatus',[App\Http\Controllers\Backend\ProvinceController::class,'changeStatus'])->name('provinces.changeStatus');
+    Route::post('provinces/restore/{id}',[App\Http\Controllers\Backend\ProvinceController::class,'restore'])->name('provinces.restore');
+    Route::post('provinces/restore_all',[App\Http\Controllers\Backend\ProvinceController::class,'restore_all'])->name('provinces.restoreAll');
+    Route::resource('provinces', App\Http\Controllers\Backend\ProvinceController::class)->except('create','update');
 
+    Route::get('districts/changeStatus',[App\Http\Controllers\Backend\DistrictController::class,'changeStatus'])->name('districts.changeStatus');
+    Route::post('districts/restore/{id}',[App\Http\Controllers\Backend\DistrictController::class,'restore'])->name('districts.restore');
+    Route::post('districts/restore_all',[App\Http\Controllers\Backend\DistrictController::class,'restore_all'])->name('districts.restoreAll');
+    Route::resource('districts', App\Http\Controllers\Backend\DistrictController::class)->except('create','update');
     // Route for user profile
     // Route::get('profile/generalInfo', [App\Http\Controllers\Backend\ProfilesController::class, 'generalInfo'])->name('profile.generalInfo');
     // Route::post('profile/generalInfo/update', [App\Http\Controllers\Backend\ProfilesController::class, 'updateInfo'])->name('profile.updateInfo');

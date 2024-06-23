@@ -48,7 +48,42 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="nav-header">គ្រប់គ្រងអាសយដ្ឋាន</li>
+                <li class="nav-item @if(request()->routeIs('admin.provinces*','admin.districts*')) menu-is-opening menu-open @endif">
+                    <a href="{{ route('admin.provinces.index') }}" class="nav-link @if(request()->routeIs('admin.provinces*')) active @endif">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            គ្រប់គ្រងអាសយដ្ឋាន
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.provinces.index') }}" class="nav-link @if(request()->routeIs('admin.provinces*')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Provinces</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.districts.index') }}" class="nav-link @if(request()->routeIs('admin.districts*')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Districts</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Communes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Villages</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
