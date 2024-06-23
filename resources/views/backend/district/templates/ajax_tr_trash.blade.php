@@ -1,4 +1,4 @@
-{{-- <tr id="tr_object_id_{{ $row->id }}" class="bgc-h-orange-l4">
+<tr id="tr_object_id_{{ $row->id }}" class="bgc-h-orange-l4">
     <td>{{ $row->id }}</td>
     <td>{{ $row->name }}</td>
     <td>{{ $row->district_code }}</td>
@@ -14,4 +14,4 @@
 
       </div>
     </td>
-  </tr> --}}
+  </tr>

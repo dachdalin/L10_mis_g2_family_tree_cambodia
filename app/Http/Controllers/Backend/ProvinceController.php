@@ -122,9 +122,9 @@ class ProvinceController extends Controller
         abort_if(Gate::denies($this->prefix.'delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $province = Province::findOrFail($id);
         // check if have province_id in table users and table districts can not delete
-        $users = User::where('province_id', $id)->first();
+        // $users = User::where('province_id', $id)->first();
         $districts = District::where('province_id', $id)->first();
-        if($users || $districts){
+        if($districts){
             $response = [
                 'status' => 400,
                 'error' => 'Province can not be deleted because it has use in other'

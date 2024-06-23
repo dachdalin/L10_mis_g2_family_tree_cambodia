@@ -125,9 +125,9 @@ class DistrictController extends Controller
         abort_if(Gate::denies($this->prefix.'delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $district = District::findOrFail($id);
         // check if have province_id in table users and table districts can not delete
-        $users = User::where('province_id', $id)->first();
+        // $users = User::where('province_id', $id)->first();
         $commune = Commune::where('district_id', $id)->first();
-        if($users || $commune){
+        if($commune){
             $response = [
                 'status' => 400,
                 'error' => 'District can not be deleted because it has use in other'
