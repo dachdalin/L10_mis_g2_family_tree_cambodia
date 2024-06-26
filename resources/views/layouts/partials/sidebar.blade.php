@@ -48,6 +48,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="nav-header">គ្រប់គ្រងអាសយដ្ឋាន</li>
                 <li class="nav-item @if(request()->routeIs('admin.provinces*','admin.districts*')) menu-is-opening menu-open @endif">
                     <a href="{{ route('admin.provinces.index') }}" class="nav-link @if(request()->routeIs('admin.provinces*')) active @endif">
@@ -84,6 +85,50 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-header">Family Teams</li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.people.search') }}" class="nav-link @if(request()->routeIs('admin.people.search')) active @endif">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>Team Lists</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>Birthdays</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.people.show', "id") }}" class="nav-link @if(request()->routeIs('admin.people.show', "id")) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Show person profile</p>
+                    </a>
+                </li>
+                <li class="nav-item @if(request()->routeIs('admin.users*', 'admin.roles*')) menu-is-opening menu-open  @endif">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link @if(request()->routeIs('admin.users*')) active @endif">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Manage Teams
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link @if(request()->routeIs('admin.users*')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Team Settings</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.roles.index')}}" class="nav-link @if(request()->routeIs('admin.roles*')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create Team</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>

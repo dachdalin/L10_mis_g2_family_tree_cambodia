@@ -45,6 +45,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Route::post('profile/changePhoto', [App\Http\Controllers\Backend\ProfilesController::class, 'resetPhoto'])->name('profile.reset.photo');
 
 
+    Route::controller(App\Http\Controllers\Backend\PeopleController::class)->group(function () {
+        Route::get('search', 'search')->name('people.search');
+
+        // Route::get('people/add', 'add')->name('people.add');
+        Route::get('people/{person}', 'show')->name('people.show');
+
+        Route::get('people/{person}/ancestors', 'ancestors')->name('people.ancestors');
+        Route::get('people/{person}/descendants', 'descendants')->name('people.descendants');
+        Route::get('people/{person}/chart', 'chart')->name('people.chart');
+
+
+
+    });
+
+
 
 
 });
