@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->char('iso2', 2)->nullable()->unique();
+            $table->char('iso3', 3)->nullable()->unique();
+            $table->string('name')->index();
+            $table->string('name_nl')->index();
+            $table->string('isd', 8)->nullable();
+            $table->boolean('is_eu')->default(0)->index();
             $table->timestamps();
         });
     }

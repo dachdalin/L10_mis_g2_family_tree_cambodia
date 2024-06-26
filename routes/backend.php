@@ -45,6 +45,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Route::post('profile/changePhoto', [App\Http\Controllers\Backend\ProfilesController::class, 'resetPhoto'])->name('profile.reset.photo');
 
 
+
+    // -----------------------------------------------------------------------------------------------
+    // people
+    // -----------------------------------------------------------------------------------------------
     Route::controller(App\Http\Controllers\Backend\PeopleController::class)->group(function () {
         Route::get('search', 'search')->name('people.search');
 
@@ -57,6 +61,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
 
 
+    });
+
+    // -----------------------------------------------------------------------------------------------
+    // pages
+    // -----------------------------------------------------------------------------------------------
+    Route::controller(App\Http\Controllers\Team\TeamPageController::class)->group(function () {
+        // Route::get('dependencies', 'dependencies')->name('dependencies');
+        // Route::get('session', 'session')->name('session');
+        // Route::get('test', 'test')->name('test');
+
+        // Route::get('people', 'people')->name('people');
+        // Route::get('peoplelog', 'peoplelog')->name('peoplelog');
+        Route::get('teams', 'teams')->name('teams');
+        Route::get('create/teams', 'add')->name('create.teams');
+        // Route::get('users', 'users')->name('users');
     });
 
 

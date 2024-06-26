@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('person_metadata', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('person_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+
+            $table->string('key')->index();
+            $table->string('value')->nullable();
+
             $table->timestamps();
+
+            $table->unique(['person_id', 'key']);
         });
     }
 

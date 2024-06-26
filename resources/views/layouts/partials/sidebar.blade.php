@@ -105,8 +105,8 @@
                         <p>Show person profile</p>
                     </a>
                 </li>
-                <li class="nav-item @if(request()->routeIs('admin.users*', 'admin.roles*')) menu-is-opening menu-open  @endif">
-                    <a href="{{ route('admin.users.index') }}" class="nav-link @if(request()->routeIs('admin.users*')) active @endif">
+                <li class="nav-item @if(request()->routeIs('admin.teams*', 'admin.create.teams*')) menu-is-opening menu-open  @endif">
+                    <a href="{{ route('admin.teams') }}" class="nav-link @if(request()->routeIs('admin.teams*')) active @endif">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Manage Teams
@@ -115,13 +115,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" class="nav-link @if(request()->routeIs('admin.users*')) active @endif">
+                            <a href="{{ route('admin.teams') }}" class="nav-link @if(request()->routeIs('admin.teams*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Team Settings</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('admin.roles.index')}}" class="nav-link @if(request()->routeIs('admin.roles*')) active @endif">
+                            <a href="{{route('admin.create.teams')}}" class="nav-link @if(request()->routeIs('admin.create.teams*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Create Team</p>
                             </a>
