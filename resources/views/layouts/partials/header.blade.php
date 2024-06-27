@@ -9,6 +9,7 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -36,11 +37,13 @@
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
+
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>
+
     </ul>
     <ul class="navbar-nav ms-auto">
         <!-- Authentication Links -->
@@ -50,13 +53,17 @@
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
             @endif
-        @else
+        @else            
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    {{ Auth::user()->name }}
+                    {{ Auth::user()->firstname }}
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <span>Manage account</span>
+                    <a href="#" class="dropdown-item dropdown-footer">My Profile</a>
+                    <div class="dropdown-divider"></div>
+
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
@@ -67,6 +74,7 @@
                         @csrf
                     </form>
                 </div>
+
             </li>
         @endguest
     </ul>

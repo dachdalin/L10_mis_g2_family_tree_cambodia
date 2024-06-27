@@ -16,9 +16,9 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-6 mb-3">
                   <div class="form-group">
-                    <label for="name" class="form-control-label mb-1">Name: <span class="text-danger">*</span></label>
-                    <input id="name" name="name" class="form-control" type="text" placeholder="name">
-                    <span class="text-danger error-text name_error"></span>
+                    <label for="firstname" class="form-control-label mb-1">Firstname: <span class="text-danger">*</span></label>
+                    <input id="firstname" name="firstname" class="form-control" type="text" placeholder="name">
+                    <span class="text-danger error-text firstname_error"></span>
                   </div>
                 </div>
 
