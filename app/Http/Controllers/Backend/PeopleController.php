@@ -7,31 +7,59 @@ use Illuminate\Http\Request;
 
 class PeopleController extends Controller
 {
-    public function search()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        return view('backend.people.search');
+        //
     }
 
-
-
-
-    public function show()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return view('backend.people.show');
+        //
     }
 
-    public function ancestors()
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        return view('backend.people.ancestors');
+        //
     }
 
-    public function descendants()
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        return view('backend.people.descendants');
+        //
     }
 
-    public function chart()
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        return view('backend.people.chart');
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

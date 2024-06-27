@@ -5,9 +5,6 @@
   <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-
-  <!-- daterange picker -->
-  <link rel="stylesheet" href="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.css">
 @endpush
 
 @push('page-styles')
@@ -31,46 +28,6 @@
     input.ace-switch.ace-switch-onoff::before {
       content: "Off";
     }
-    hr.hr-5 {
-      border: 0;
-      border-top: 3px double #8c8c8c;
-    }
-
-    .role-list {
-        margin-top: 10px;
-    }
-
-    .role-category {
-        font-weight: bold;
-        margin-top: 15px;
-    }
-
-    .role-item {
-        border-bottom: 1px solid #ccc;
-        padding: 10px;
-        color: #666;
-    }
-
-    .role-category {
-        /* border-bottom: 1px solid #ccc; */
-        padding: 10px;
-        cursor: pointer;
-        color: #666;
-    }
-
-    .role-category.selected {
-        background-color: #f0f0f0; /* Change background color when selected */
-    }
-
-    .role-category.selected::after {
-        content: '\2714'; /* Unicode check mark icon */
-        float: right;
-        color: green;
-        font-size: 1.2em;
-        margin-left: 5px;
-    }
-
-
   </style>
 @endpush
 
@@ -96,94 +53,56 @@
       <div class="col-12">
 
         <div class="card">
-          
           <div class="card-header">
             <h3 class="card-title">DataTable with default features</h3>
+            <a class="btn btn-info float-right" data-toggle="modal" data-target="#crudObjectModal">
+              <i class="fas fa-plus"></i> Add
+            </a>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-              <style>
-                .profile-card img {
-                    width: 100%;
-                    height: auto;
-                }
-                .card-title {
-                    font-weight: bold;
-                }
-                .card-body p {
-                    margin: 0;
-                }
-                .section-title {
-                    font-size: 1.25rem;
-                    margin-bottom: 1rem;
-                }
-                .list-group-item {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-                .list-group-item span {
-                    flex-grow: 1;
-                    text-align: right;
-                }
-                .dropdown-menu {
-                    right: 0;
-                    left: auto;
-                }
-            </style>
-
-            <div class="container-fluid mt-4">
-              <div class="row">
-
-                  <div class="col-md-12">
-
-                      <div class="row">
-
-                        <div class="col-md-6 mb-3">
-
-                            <h4 class="section-title mb-0">Team Name</h4>
-                            <span>The team's name and owner information.</span>
-
-
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <div class="card">
-                              <div class="card-header d-flex justify-content-between align-items-center">
-                                <h4 class="section-title mb-0">Owner :</h4>
-                              </div>
-                              <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                  <img src="https://via.placeholder.com/100" alt="Ancestor Picture" class="mb-2 mr-3">
-                                  <div>
-                                    <p>dara Mr</p>
-                                    <p>Additional info</p>
-                                  </div>
-                                </div>
-                                <div class="form-group mt-3">
-                                  <label for="ownerName">Name</label>
-                                  <input type="text" class="form-control" id="ownerName" placeholder="Enter name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description" class="form-control-label mb-1">Description:</label>
-                                    <textarea id="description" name="description"
-                                            class="textarea_editor form-control border-radius-0"  placeholder="Enter text ..."></textarea>
-                                    <span class="text-danger error-text description_error"></span>
-                                </div>
-                              </div>
-                              <div class="card-footer text-right">
-                                <button type="button" class="btn btn-primary">Save</button>
-                              </div>
-                            </div>
-                          </div>
-                          
-
-                      </div>
-
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                  <thead>
+                    <tr>
+                      <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">No</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Name</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Description</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Owner</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Create At</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="objectList">
+                    @foreach ($teams as $row)
+                      <tr id="tr_object_id_{{ $row->id }}" class="bgc-h-orange-l4">
+                        <td>{{ $row->id }}</td>
+                        <td>{{ $row->name }}</td>
+                        <td>{{ $row->description }}</td>
+                        <td>{{ $row->owner->firstname ?? 'N/A' }}</td>
+                        <td>{{ date('d-M-Y', strtotime($row->created_at)) }}</td>
+                        <td>
+                          @include('backend.templates.crudAction')
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">No</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Name</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Description</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Owner</th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Create At</th>
+                      <th>Action</th>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
-
           </div>
           <!-- /.card-body -->
         </div>
@@ -193,6 +112,8 @@
     </div>
     <!-- /.row -->
   </div>
+
+  @include('backend.teams.templates.crudModal')
 @endsection
 
 @push('vendor-scripts')
@@ -210,35 +131,8 @@
 <script src="{{asset('asset')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="{{asset('asset')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-<!-- date-range-picker -->
-<script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script>
-
 <script>
-
-$(document).ready(function() {
-    $('.role-category').click(function() {
-        $('.role-category').removeClass('selected'); // Remove 'selected' class from all items
-        $(this).addClass('selected'); // Add 'selected' class to the clicked item
-    });
-});
-
   $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-
-    //Date picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-
-    
-
-
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
@@ -275,14 +169,7 @@ $(document).ready(function() {
       });
       $('#addNewObject').on('click',function(e){
         e.preventDefault();
-        $('#crudObjectModal').find('.modal-title').html('Add person');
-
-        // Clear the input image when modal is close
-        $('#crudObjectModal').on('hidden.bs.modal', function (){
-          $('#image').val('');
-          $('#showPhoto').attr('src', "{{asset('images/no_image_available.jpg')}}");
-        });
-
+        $('#crudObjectModal').find('.modal-title').html('Add New User');
         $('#frmCrudObject').find('#object_id').val('');
         $('#frmCrudObject').find('#btnObjectSave').html(`<i class="far fa-save text-danger-tp1 radius-round mr-1 align-middle pt-10"></i>
                                                         <span class="align-middle pl-1 pr-2">Save</span>`);
@@ -290,59 +177,109 @@ $(document).ready(function() {
         $('#frmCrudObject').find('#btnObjectUpdate').addClass('d-none');
         $('#frmCrudObject').trigger('reset');
         $('#crudObjectModal').modal('show');
-
-
-        // Clear the image when click on button add
-        $('#image').val('');
-        $('#showPhoto').attr('src', "{{asset('images/no_image_available.jpg')}}");
       });
 
-      $('#frmCrudObject').on('submit',function(e){
+      $('#frmCrudObject').on('submit', function(e) {
         e.preventDefault();
-
         var actionUrl = $(this).attr('action');
-        var method = $(this).attr('method')
-        $('#btnObjectSave').html('Processing..'); // After click save it should redirect to people show
+        var method = $(this).attr('method');
+        $('#btnObjectSave').html('Processing..');
         $('#btnObjectUpdate').html('Processing..');
         $.ajax({
-          type: method,
-          url: actionUrl,
-          data: new FormData(this),
-          processData:false,
-          dataType:'json',
-          contentType:false,
-          beforeSend:function(){
-            $(document).find('span.error-text').text('');
-          },
-          success: function (res) {
-            console.log(res)
-            if(res.status==400){
-              $.each(res.error, function(prefix, val){
-                $('span.'+prefix+'_error').text(val[0]);
-              });
-            } else {
-              var $html = $(res.html);
-              if(res.type == 'store-object'){
-                $('tbody#objectList').append($html);
-              }else{
-                $("#tr_object_id_" + res.data.id).replaceWith($html);
-              }
-              $('#frmCrudObject').trigger("reset");
-                $('#btnObjectSave').html('{{ trans('global.save') }}');
-                $('#showPhoto').attr('src',"{{asset('images/no_image_available.jpg')}}");
-              $('#btnObjectUpdate').html('{{ trans('global.update') }}');
-              toastr.success(res.success);
-              $('#crudObjectModal' ).modal('hide');
+            type: method,
+            url: actionUrl,
+            data: new FormData(this),
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            beforeSend: function() {
+                $(document).find('span.error-text').text('');
+            },
+            success: function(res) {
+                console.log(res);
+                if (res.status == 400) {
+                    $.each(res.error, function(prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                } else {
+                    var $html = $(res.html);
+                    if (res.type == 'store-object') {
+                        $('tbody#objectList').append($html);
+                    } else {
+                        $("#tr_object_id_" + res.data.id).replaceWith($html);
+                    }
+                    $('#frmCrudObject').trigger("reset");
+                    $('#crudObjectModal').modal('hide');
+                    $('#btnObjectSave').html('Save');
+                    $('#btnObjectUpdate').html('Update');
+                    toastr.success(res.success);
+                    window.location.href = '{{ route('admin.people.search') }}?team_id=' + res.data.id; // Redirect to search route with team_id
+                }
+            },
+            error: function(error) {
+                console.log('Error:', error);
+                $('#btnObjectSave').html('Save');
+                $('#btnObjectUpdate').html('Update');
             }
-          },
-          error: function (error) {
-            console.log('Error:', error);
-            $('#btnObjectSave').html('{{ trans('global.save')}}');
-            $('#btnObjectUpdate').html('{{ trans('global.update') }}');
-          }
         });
+    });
+
+      $('body').on('click', '#objectEdit', function (e) {
+        e.preventDefault();
+        $('#frmCrudObject').find('#btnObjectSave').addClass('d-none');
+        $('#frmCrudObject').find('#btnObjectUpdate').removeClass('d-none');
+        $('#frmCrudObject').find('#btnObjectUpdate').html('<i class="fadeIn animated bx bx-edit"></i>&nbsp;Update');
+        $('#frmCrudObject').trigger('reset');
+        var object_id = $(this).data('id');
+        var form = $('#frmCrudObject');
+        var modal = $('#crudObjectModal');
+        var actionUrl = $('#crudRoutePath').val();
+        modal.find('.modal-title').html('Edit Team');
+        $.get( actionUrl +'/' +object_id+'/edit', function (res) {
+          form.find('#object_id').val(res.data.id);
+          
+          form.find('#name').val(res.data.name);
+          form.find('#description').val(res.data.description);
+          
+          modal.modal('show');
+        })
       });
-      
+
+      $('body').on('click', '.objectDelete', function (e) {
+        e.preventDefault();
+        var object_id = $(this).data("id");
+        var link = $(this).attr("href");
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({
+              type: "DELETE",
+              url:link,
+              success: function (data) {
+                // Remove the data from the active table
+                $("#tr_object_id_" + object_id).remove();
+
+                var newRowHtml = `
+                    @include('backend.teams.templates.ajax_tr_trash')
+                `;
+
+                $('#objectListTrashed').append(newRowHtml);
+                toastr.success('Team has been deleted into trashed successfully!');
+                },
+              error: function (data) {
+                console.log('Error:', data);
+              }
+            });
+          }
+        })
+      });
 
 
       $('#btnObjectClose').on('click',function(e){
@@ -354,33 +291,12 @@ $(document).ready(function() {
       });
 
 
+      
+
+
 
     });
   </script>
-
-<script>
-
-  // -------------Browse photo------------------
-  $('.show-photo').on('click',function(e){
-    $('#school_img').click();
-  })
-  $('#school_img').on('change',function(e){
-    showFile(this,'#showPhoto');
-  })
-  // ======================================
-  function showFile(fileInput,img,showName){
-    if (fileInput.files[0]){
-      var reader = new FileReader();
-      reader.onload = function(e){
-        $(img).attr('src',e.target.result);
-      }
-      reader.readAsDataURL(fileInput.files[0]);
-    }
-    $(showName).text(fileInput.files[0].name)
-  };
-
-
-</script>
 @endpush
 
 

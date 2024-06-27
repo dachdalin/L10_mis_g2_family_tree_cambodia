@@ -134,116 +134,115 @@
             </style>
 
             <div class="container-fluid mt-4">
-              <div class="row">
+                <div class="row">
 
-                  <div class="col-md-12">
+                    <div class="col-md-12">
 
-                      <div class="row">
+                        <div class="row">
 
-                        <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3">
 
-                            <h4 class="section-title mb-0">Team Name</h4>
-                            <span>The team's name and owner information.</span>
+                                <h4 class="section-title mb-0">Team Name</h4>
+                                <span>The team's name and owner information.</span>
 
 
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <div class="card">
-                              <div class="card-header d-flex justify-content-between align-items-center">
-                                <h4 class="section-title mb-0">Owner :</h4>
-                              </div>
-                              <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                  <img src="https://via.placeholder.com/100" alt="Ancestor Picture" class="mb-2 mr-3">
-                                  <div>
-                                    <p>dara Mr</p>
-                                    <p>Additional info</p>
-                                  </div>
-                                </div>
-                                <div class="form-group mt-3">
-                                  <label for="ownerName">Name</label>
-                                  <input type="text" class="form-control" id="ownerName" placeholder="Enter name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description" class="form-control-label mb-1">Description:</label>
-                                    <textarea id="description" name="description"
-                                            class="textarea_editor form-control border-radius-0"  placeholder="Enter text ..."></textarea>
-                                    <span class="text-danger error-text description_error"></span>
-                                </div>
-                              </div>
-                              <div class="card-footer text-right">
-                                <button type="button" class="btn btn-primary">Save</button>
-                              </div>
                             </div>
-                          </div>
-                          
 
-                      </div>
-
-                      <div class="row">
-
-                        <div class="col-md-6 mb-3">
-
-                            <h4 class="section-title mb-0">Add Team Member</h4>
-                            <span>Add a new team member to your team, allowing them to collaborate with you.</span>
-
-
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
                                     <h4 class="section-title mb-0">Owner :</h4>
-                                </div>
-
-                                
-                                <div class="card-body">
-                                    <span>Please provide the email address of the new user you would like to add to this team.
-                                        Then select the role for the new user.</span>
-                                    <div class="form-group">
-                                        <label for="userEmail">Email</label>
-                                        <input type="email" class="form-control" id="userEmail" placeholder="Enter email address">
+                                    </div>
+                                    <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ Auth::user()->profile_photo_path ? asset(Auth::user()->profile_photo_path) : 'https://via.placeholder.com/100' }}" alt="Ancestor Picture" class="mb-2 mr-3">
+                                        <div>
+                                            <p>{{ Auth::user()->firstname }}</p>
+                                            <p>{{ Auth::user()->email }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="userRole">Role:</label>
-                                        <div class="border rounded p-2 role-list">
-                                            <div class="role-category" data-role="administrator">Administrator</div>
-                                            <div class="role-item">
-                                                Administrators can perform any action and manage the application.
-                                            </div>
-                                            <div class="role-category" data-role="manager">Manager</div>
-                                            <div class="role-item">
-                                                Managers can perform any action on people.
-                                            </div>
-                                            <div class="role-category" data-role="editor">Editor</div>
-                                            <div class="role-item">
-                                                Editors have the ability to create, read and update people.
-                                            </div>
-                                            <div class="role-category" data-role="member">Member</div>
-                                            <div class="role-item">
-                                                Members have the ability to read people.
+                                        <label for="description" class="form-control-label mb-1">Description:</label>
+                                        <textarea id="description" name="description"
+                                                class="textarea_editor form-control border-radius-0"  placeholder="Enter text ..."></textarea>
+                                        <span class="text-danger error-text description_error"></span>
+                                    </div>
+                                    </div>
+                                    <div class="card-footer text-right">
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <h4 class="section-title mb-0">Add Team Member</h4>
+                                <span>Add a new team member to your team, allowing them to collaborate with you.</span>
+
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h4 class="section-title mb-0">Owner :</h4>
+                                    </div>
+
+                                    
+                                    <div class="card-body">
+                                        <span>Please provide the email address of the new user you would like to add to this team.
+                                            Then select the role for the new user.</span>
+                                        <div class="form-group">
+                                            <label for="userEmail">Email</label>
+                                            <input type="email" class="form-control" id="userEmail" placeholder="Enter email address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="userRole">Role:</label>
+                                            <div class="border rounded p-2 role-list">
+                                                <div class="role-category" data-role="administrator">Administrator</div>
+                                                <div class="role-item">
+                                                    Administrators can perform any action and manage the application.
+                                                </div>
+                                                <div class="role-category" data-role="manager">Manager</div>
+                                                <div class="role-item">
+                                                    Managers can perform any action on people.
+                                                </div>
+                                                <div class="role-category" data-role="editor">Editor</div>
+                                                <div class="role-item">
+                                                    Editors have the ability to create, read and update people.
+                                                </div>
+                                                <div class="role-category" data-role="member">Member</div>
+                                                <div class="role-item">
+                                                    Members have the ability to read people.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    
+                                    
+                                    <div class="card-footer text-right">
+                                        <button type="button" class="btn btn-primary">Add</button>
+                                    </div>
                                 </div>
                                 
-                                
-                                
-                                <div class="card-footer text-right">
-                                    <button type="button" class="btn btn-primary">Add</button>
-                                </div>
+
                             </div>
-                            
 
                         </div>
 
-                  </div>
+                    </div>
+                </div>
 
-              </div>
             </div>
-
-          </div>
           <!-- /.card-body -->
         </div>
         <!-- /.card -->

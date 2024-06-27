@@ -61,7 +61,7 @@
 
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <h3 class="card-title">Family: <span id="active-team-name">{{ $active_team_name }}</span> ({{ $member_count }} available)</h3>
             <a class="btn btn-info float-right" data-toggle="modal" data-target="#crudObjectModal">
               <i class="fas fa-plus"></i> Add person
             </a>            
@@ -72,9 +72,11 @@
             
             <div class="row">
               <div class="col-sm-6">
-                <form action="simple-results.html">
+
+                <form action="{{ route('admin.people.search') }}" method="GET" id="search-form">
                   <div class="input-group">
-                      <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here">
+                      <input type="hidden" name="team_id" value="{{ $active_team_id }}">
+                      <input type="search" name="query" class="form-control form-control-lg" placeholder="Type your keywords here">
                       <div class="input-group-append">
                           <button type="submit" class="btn btn-lg btn-default">
                               <i class="fa fa-search"></i>
@@ -82,24 +84,41 @@
                       </div>
                   </div>
               </form>
+              
               </div>
               <div class="col-sm-6">
                 <div class="form-group" data-select2-id="29">
                   <label>Switch Family Team</label>
-                  <select class="form-control select2 select2-hidden-accessible" style="width: 100%; hight: 100%" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                    <option selected="selected" data-select2-id="3">Alabama</option>
-                    <option data-select2-id="34">Alaska</option>
-                    <option data-select2-id="35">California</option>
-                    <option data-select2-id="36">Delaware</option>
-                    <option data-select2-id="37">Tennessee</option>
-                    <option data-select2-id="38">Texas</option>
-                    <option data-select2-id="39">Washington</option>
+                  <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" id="team-switch" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                      @foreach($teams as $team)
+                          <option value="{{ $team->id }}" {{ $team->id == $active_team_id ? 'selected' : '' }}>
+                              {{ $team->name }} {{ $team->id == $active_team_id ? '✔️' : '' }}
+                          </option>
+                      @endforeach
                   </select>
                 </div>
+              
                 
               </div>
             </div>
           </div>
+
+
+          <div class="row">
+            <div class="col-sm-12">
+                @if($people->isNotEmpty())
+                    <ul>
+                        @foreach($people as $person)
+                            <li>{{ $person->firstname }} {{ $person->lastname }} ({{ $person->nickname }})</li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p>No results found.</p>
+                @endif
+            </div>
+          </div>
+        
+
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
@@ -131,6 +150,15 @@
 <script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script>
 
 <script>
+
+  $(document).ready(function() {
+    $('#team-switch').change(function() {
+        var selectedTeamId = $(this).val();
+        window.location.href = '{{ route('admin.people.search') }}?team_id=' + selectedTeamId;
+    });
+  });
+
+
   $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()

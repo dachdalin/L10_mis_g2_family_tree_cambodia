@@ -11,8 +11,8 @@ class TeamPageController extends Controller
     {
         return view('backend.teams.teams');
     }
-    public function add()
-    {
-        return view('backend.teams.create_teams');
-    }
+    // public function add()
+    // {
+    //     return view('backend.teams.create_teams');
+    // }
 }

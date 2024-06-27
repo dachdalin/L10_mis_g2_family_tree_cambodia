@@ -56,7 +56,7 @@
         @else            
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    {{ Auth::user()->name }}
+                    {{ Auth::user()->firstname }}
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

@@ -4,7 +4,7 @@
       <form id="frmCrudObject" action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title">Add person</h5>
           <button id="buttonClose" type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
         </div>
         <div class="modal-body">

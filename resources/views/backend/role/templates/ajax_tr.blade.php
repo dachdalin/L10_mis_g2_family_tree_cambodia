@@ -1,3 +1,4 @@
+@if(isset($row))
 <tr id="tr_object_id_{{ $row->id }}" class="bgc-h-orange-l4">
   <td>{{ $row->id }}</td>
   <td><strong>{{ $row->title }}</strong></td>
@@ -13,3 +14,8 @@
     @include('backend.templates.crudAction')
   </td>
 </tr>
+@else
+    <tr id="noDataMessage">
+        <td colspan="6">No data available</td>
+    </tr>
+@endif
