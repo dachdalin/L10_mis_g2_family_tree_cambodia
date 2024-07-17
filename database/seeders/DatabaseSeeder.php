@@ -25,6 +25,17 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             PermissionRoleTableSeeder::class,
             RoleUserTableSeeder::class,
+            ProvincesTableSeeder::class,
+            DistrictsTableSeeder::class,
+            CommunesTableSeeder::class,
+            VillagesTableSeeder::class,
+            TeamsTableSeeder::class,
+            TeamUserTableSeeder::class,
+            GendersTableSeeder::class,
+            CountriesTableSeeder::class,
+            PeopleTableSeeder::class,
+            PersonMetadataTableSeeder::class,
+            CouplesTableSeeder::class,
            ]);
     }
 }
