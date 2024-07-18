@@ -318,9 +318,9 @@
   <script>
     // -------------Browse photo------------------
     $('.show-photo').on('click', function(e) {
-      $('#person_img').click();
+      $('#photo').click();
     })
-    $('#person_img').on('change', function(e) {
+    $('#photo').on('change', function(e) {
       showFile(this, '#showPhoto');
     })
     function showFile(fileInput, img, showName) {

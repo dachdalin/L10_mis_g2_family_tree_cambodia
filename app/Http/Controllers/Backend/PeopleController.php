@@ -653,19 +653,28 @@ class PeopleController extends Controller
     //     return view('backend.people.show');
     // }
 
-    public function ancestors()
+    public function ancestors($id)
     {
-        return view('backend.people.ancestors');
+        $crudRoutePath = $this->crudRoutePath;
+        $person = Person::with('father', 'mother')->findOrFail($id);
+
+        return view('backend.people.ancestors', compact('crudRoutePath', 'person'));
     }
 
-    public function descendants()
+    public function descendants($id)
     {
-        return view('backend.people.descendants');
+        $crudRoutePath = $this->crudRoutePath;
+        $person = Person::with('father', 'mother')->findOrFail($id);
+
+        return view('backend.people.descendants', compact('crudRoutePath', 'person'));
     }
 
-    public function chart()
+    public function chart($id)
     {
-        return view('backend.people.chart');
+        $crudRoutePath = $this->crudRoutePath;
+        $person = Person::with('father', 'mother')->findOrFail($id);
+
+        return view('backend.people.chart', compact('crudRoutePath', 'person'));
     }
 
 }

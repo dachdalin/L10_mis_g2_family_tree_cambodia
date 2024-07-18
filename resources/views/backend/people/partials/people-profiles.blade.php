@@ -32,7 +32,7 @@
                     @if($person->dod)
                         <div class="banner">Deceased</div>
                     @else
-                        <div class="banner-light-green">Alive</div>
+                        <div class="banner-light-green">Ancestors</div>
                     @endif
 
                     @if($person->photo)
