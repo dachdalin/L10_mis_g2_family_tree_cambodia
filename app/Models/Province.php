@@ -20,5 +20,10 @@ class Province extends Model
         'province_code',
     ];
 
+    public function districts()
+    {
+        return $this->hasMany(District::class);
+    }
+
 
 }

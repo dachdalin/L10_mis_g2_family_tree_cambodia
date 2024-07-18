@@ -72,13 +72,34 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // -----------------------------------------------------------------------------------------------
     // people
     // -----------------------------------------------------------------------------------------------
-    Route::resource('peoples', App\Http\Controllers\Backend\PeopleController::class)->except('create','update');
+    Route::resource('peoples', App\Http\Controllers\Backend\PeopleController::class)->except('create');
 
-    Route::controller(App\Http\Controllers\People\PeopleController::class)->group(function () {
+    Route::controller(App\Http\Controllers\Backend\PeopleController::class)->group(function () {
         Route::get('search', 'search')->name('people.search');
 
         // Route::get('people/add', 'add')->name('people.add');
-        Route::get('people/{person}', 'show')->name('people.show');
+        // Route::get('people/{person}', 'show')->name('people.show');
+        // Route::get('peoples/{id}/edit', 'edit')->name('people.edit');
+        Route::get('peoples/{id}/edit-contact', 'editContact')->name('people.editContact');
+        Route::post('peoples/store-contact', 'storeContact')->name('people.storeContact');
+
+        Route::get('peoples/{id}/edit-death', 'editDeath')->name('people.editDeath');
+        Route::post('peoples/store-death', 'storeDeath')->name('people.storeDeath');
+
+        Route::get('peoples/edit-photos/{id}', 'editPhotos')->name('people.editPhotos');
+        Route::post('peoples/store-photos', 'storePhotos')->name('people.storePhotos');
+        Route::post('peoples/set-primary-photo/{photoId}', 'setPrimaryPhoto')->name('people.setPrimaryPhoto');
+        Route::post('peoples/delete-photo/{photoId}', 'deletePhoto')->name('people.deletePhoto');
+
+
+        Route::get('peoples/get-existing-persons', 'getExistingPersons')->name('people.getExistingPersons');
+        Route::post('peoples/store-father', 'storeFather')->name('people.storeFather');
+        Route::post('peoples/select-existing-father', 'selectExistingFather')->name('people.selectExistingFather');
+
+
+
+        // Route::post('peoples/{id}', 'update')->name('people.update');
+
 
         Route::get('people/{person}/ancestors', 'ancestors')->name('people.ancestors');
         Route::get('people/{person}/descendants', 'descendants')->name('people.descendants');

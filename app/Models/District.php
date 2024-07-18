@@ -12,4 +12,24 @@ class District extends Model
 
     protected $table = 'districts';
     protected $guarded = ['id'];
+
+
+    protected $fillable = [
+        'created_by',
+        'province_id',
+        'name',
+        'slug',
+        'status',
+        'district_code',
+    ];
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function communes()
+    {
+        return $this->hasMany(Commune::class);
+    }
 }

@@ -41,11 +41,13 @@ return new class extends Migration
             $table->foreignId('country_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
             $table->string('phone', 50)->nullable();
 
-            $table->string('photo')->nullable();
+            $table->text('photo')->nullable();
 
             $table->unsignedBigInteger('team_id')->nullable()->index();
             // ---------------------------------------------------------------------
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

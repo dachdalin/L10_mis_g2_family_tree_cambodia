@@ -100,7 +100,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.people.show', "id") }}" class="nav-link @if(request()->routeIs('admin.people.show', "id")) active @endif">
+                    <a href="{{ route('admin.peoples.show', "id") }}" class="nav-link @if(request()->routeIs('admin.people.show', "id")) active @endif">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Show person profile</p>
                     </a>

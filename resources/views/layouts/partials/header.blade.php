@@ -76,6 +76,18 @@
                 </div>
 
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    {{ $active_team_name ?? 'Select Team' }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    @foreach($teams as $team)
+                        <a class="dropdown-item" href="{{ route('admin.people.search', ['team_id' => $team->id]) }}">
+                            {{ $team->name }} {{ $active_team_id == $team->id ? '✔️' : '' }}
+                        </a>
+                    @endforeach
+                </div>
+            </li>
         @endguest
     </ul>
 </nav>

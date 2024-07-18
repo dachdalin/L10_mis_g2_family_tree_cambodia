@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('isd', 8)->nullable();
             $table->boolean('is_eu')->default(0)->index();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
