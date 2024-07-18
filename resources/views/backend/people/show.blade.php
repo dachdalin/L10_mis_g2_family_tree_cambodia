@@ -247,7 +247,7 @@
             $(document).find('span.error-text').text('');
           },
           success: function (res) {
-            console.log(res)
+            // console.log(res)
             if(res.status==400){
               $.each(res.error, function(prefix, val){
                 $('span.'+prefix+'_error').text(val[0]);
@@ -273,7 +273,7 @@
             }
           },
           error: function (error) {
-            console.log('Error:', error);
+            // console.log('Error:', error);
             $('#btnObjectSave').html('{{ trans('global.save')}}');
             $('#btnObjectUpdate').html('{{ trans('global.update') }}');
           }
@@ -295,37 +295,37 @@
         var modal = $('#crudObjectModal');
         var actionUrl = '{{ route('admin.peoples.edit', ':id') }}'.replace(':id', personId);
 
-        console.log('Fetching data for person ID:', personId); // Debugging
+        // console.log('Fetching data for person ID:', personId); // Debugging
 
         modal.find('.modal-title').html('Edit Profile');
         $.get(actionUrl, function (res) {
-            console.log('Received response:', res); // Debugging
+            // console.log('Received response:', res); // Debugging
             
             var person = res.data;
             var photos = res.photos || [];
             var teamName = person.team.name;
-            console.log('Person data:', person); // Debugging
+            // console.log('Person data:', person); // Debugging
             
             form.find('#object_id').val(person.id);
-            console.log('Setting firstname:', person.firstname); // Debugging
+            // console.log('Setting firstname:', person.firstname); // Debugging
             form.find('#firstname').val(person.firstname);
             
-            console.log('Setting lastname:', person.lastname); // Debugging
+            // console.log('Setting lastname:', person.lastname); // Debugging
             form.find('#lastname').val(person.lastname);
             
-            console.log('Setting birthname:', person.birthname); // Debugging
+            // console.log('Setting birthname:', person.birthname); // Debugging
             form.find('#birthname').val(person.birthname);
             
-            console.log('Setting nickname:', person.nickname); // Debugging
+            // console.log('Setting nickname:', person.nickname); // Debugging
             form.find('#nickname').val(person.nickname);
             
-            console.log('Setting yob:', person.yob); // Debugging
+            // console.log('Setting yob:', person.yob); // Debugging
             form.find('#yob').val(person.yob);
             
-            console.log('Setting dob:', person.dob); // Debugging
+            // console.log('Setting dob:', person.dob); // Debugging
             form.find('#dob').val(person.dob);
             
-            console.log('Setting pob:', person.pob); // Debugging
+            // console.log('Setting pob:', person.pob); // Debugging
             form.find('#pob').val(person.pob);
             
             if (person.sex === 'm') {
@@ -402,11 +402,11 @@
         var modal = $('#crudContactModal');
         var actionUrl = '{{ route('admin.people.editContact', ':id') }}'.replace(':id', personId);
 
-        console.log('Fetching contact data for person ID:', personId);
+        // console.log('Fetching contact data for person ID:', personId);
 
         modal.find('.modal-title').html('Edit contact');
         $.get(actionUrl, function (res) {
-            console.log('Received response:', res);
+            // console.log('Received response:', res);
             var person = res.data;
 
             form.find('#object_id').val(person.id);

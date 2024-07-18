@@ -97,10 +97,10 @@
                   </div>
                   <div class="col-md-12 text-center">
                     <div class="form-group">
-                      <img width="25%" src="https://via.placeholder.com/150" class="show-photo" id="showPhoto" alt="No Image" title="Upload Image" style="cursor: pointer; border-radius:10px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                      <img width="25%" src="{{asset('images/no_image_available.jpg')}}" class="show-photo" id="showPhoto" alt="No Image" title="Upload Image" style="cursor: pointer; border-radius:10px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
                       <input type="hidden" name="old_image" id="old_image">
-                      <input type="file" name="photo" id="person_img" accept="image/x-png,image/png,image/jpg,image/jpeg" class="form-control d-none">
-                      <span class="text-danger error-text person_img_error"></span>
+                      <input type="file" name="photo" id="photo" accept="image/x-png,image/png,image/jpg,image/jpeg" class="form-control d-none">
+                      <span class="text-danger error-text photo_error"></span>
                     </div>
                   </div>
                 </div>

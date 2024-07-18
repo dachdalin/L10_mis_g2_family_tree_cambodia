@@ -289,7 +289,7 @@
 
                         // Redirect to people.show route
                         if (res.data && res.data.id) {
-                            window.location.href = '{{ route("admin.people.show", ":id") }}'.replace(':id', res.data.id);
+                            window.location.href = '{{ route("admin.peoples.show", ":id") }}'.replace(':id', res.data.id);
                         }
                     }
                 },
