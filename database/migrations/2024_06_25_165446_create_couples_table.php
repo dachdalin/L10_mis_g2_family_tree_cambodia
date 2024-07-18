@@ -25,6 +25,8 @@ return new class extends Migration
             $table->unsignedBigInteger('team_id')->nullable()->index();
             // ---------------------------------------------------------------------
             $table->timestamps();
+            $table->softDeletes();
+
 
             $table->unique(['person1_id', 'person2_id', 'date_start']);
         });

@@ -1,7 +1,7 @@
 <div class="modal fade" id="partnerCrudObjectModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <form id="frmCrudObject" action="" method="post" enctype="multipart/form-data">
+      <form id="frmPartnerCrudObject" action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="modal-header">
           <h5 class="modal-title">Add Partner or Relationship</h5>
@@ -91,8 +91,8 @@
                   <div class="form-group">
                     <img width="25%" src="https://via.placeholder.com/150" class="show-photo" id="showPhoto" alt="No Image" title="Upload Image" style="cursor: pointer; border-radius:10px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
                     <input type="hidden" name="old_image" id="old_image">
-                    <input type="file" name="person_img" id="person_img" accept="image/x-png,image/png,image/jpg,image/jpeg" class="form-control d-none">
-                    <span class="text-danger error-text person_img_error"></span>
+                    <input type="file" name="photo" id="photo" accept="image/x-png,image/png,image/jpg,image/jpeg" class="form-control d-none">
+                    <span class="text-danger error-text photo_error"></span>
                   </div>
                 </div>
                 <!-- Additional fields start here -->
@@ -148,12 +148,12 @@
             <div class="tab-pane fade" id="existing-partner" role="tabpanel" aria-labelledby="existing-partner-tab">
 
               <div class="form-group">
-                <label for="existing_person" class="form-control-label mb-1">Select Existing Person:</label>
-                <select id="existing_person" name="existing_person" class="form-control select2">
+                <label for="existing_partner" class="form-control-label mb-1">Select Existing Person:</label>
+                <select id="existing_partner" name="existing_partner" class="form-control select2">
                   <!-- Options will be populated dynamically -->
                   <option value="">Select Person</option>
                 </select>
-                <span class="text-danger error-text existing_person_error"></span>
+                <span class="text-danger error-text existing_partner_error"></span>
               </div>
 
               <!-- Additional fields start here -->

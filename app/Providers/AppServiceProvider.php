@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Team;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::before(function ($user, $ability) {
             return $user->roles('SuperAdmin') ? true : null;
+        });
+
+        view()->composer('*', function ($view) {
+            $view->with('teams', Team::all());
         });
     }
 }

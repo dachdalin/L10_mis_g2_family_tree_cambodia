@@ -1,5 +1,5 @@
-<h3 class="card-title">DataTable with default features</h3>
-<a class="btn btn-info float-right">
+{{-- <h3 class="card-title">DataTable with default features</h3> --}}
+<a href="{{ route('admin.'.$crudRoutePath.'.show', $person->id) }}" class="btn btn-info float-right">
 <i class="fas fa-profile"></i> Profile
 </a>            
 <a href="{{ route('admin.people.ancestors', ['person' => 1]) }}" class="btn btn-info float-right @if(request()->routeIs('admin.people.ancestors')) active @endif">
