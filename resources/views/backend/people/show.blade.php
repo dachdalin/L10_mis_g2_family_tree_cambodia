@@ -131,6 +131,10 @@
   {{-- Modal for add mother --}}
   @include('backend.people.templates.motherCrudModal')
 
+
+  {{-- Modal for edit familyCrudModal --}}
+  @include('backend.people.templates.familyCrudModal')
+
   {{-- Modal for add parent --}}
   @include('backend.people.templates.partnerCrudModal')
 
@@ -938,6 +942,172 @@
         $('#frmExistingFather').show();
     }
     /*====== end add new person or existing person as father ======*/
+
+
+
+
+    /*====== for add new person or existing person as mother ======*/
+    // Initialize Select2 plugin
+    $('.select2').select2();
+
+    // Load existing persons into the select dropdown for assigning as mother
+    // $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    //     var target = $(e.target).attr("href");
+    //     if (target === '#existing-person') {
+    //         $.get('{{ route("admin.people.getExistingPersons") }}')
+    //             .done(function (data) {
+    //                 var existingPersonSelect = $('#existing_person');
+    //                 existingPersonSelect.empty();
+    //                 existingPersonSelect.append('<option value="">Select Person</option>');
+    //                 $.each(data, function (index, person) {
+    //                     existingPersonSelect.append('<option value="' + person.id + '">' + person.firstname + ' ' + person.lastname + '</option>');
+    //                 });
+    //             })
+    //             .fail(function (jqXHR, textStatus, errorThrown) {
+    //                 console.error('Error fetching existing persons:', textStatus, errorThrown);
+    //             });
+    //     }
+    // });
+
+    // Handle form submission for adding a new father
+    $('#frmMotherCrudObject').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var actionUrl = $(this).attr('action');
+
+        $.ajax({
+            type: 'POST',
+            url: actionUrl,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-text').text('');
+            },
+            success: function (res) {
+                if (res.status === 400) {
+                    $.each(res.error, function (prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                } else {
+                    $('#frmMotherCrudObject').trigger("reset");
+                    $('#motherCrudObjectModal').modal('hide');
+                    toastr.success(res.success);
+
+                    // Update the family section
+                    $('#family').html(res.familyHtml);
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    });
+
+    // Handle form submission for selecting an existing father
+    $('#frmExistingMother').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var actionUrl = $(this).attr('action');
+
+        $.ajax({
+            type: 'POST',
+            url: actionUrl,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-text').text('');
+            },
+            success: function (res) {
+                if (res.status === 400) {
+                    $.each(res.error, function (prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                } else {
+                    $('#frmExistingMother').trigger("reset");
+                    $('#motherCrudObjectModal').modal('hide');
+                    toastr.success(res.success);
+
+                    // Update the family section
+                    $('#family').html(res.familyHtml);
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    });
+
+    // Handle the save button click event
+    $('#saveMother').on('click', function () {
+        if ($('#new-mother-tab').hasClass('active')) {
+            $('#frmMotherCrudObject').submit();
+        } else if ($('#existing-mother-tab').hasClass('active')) {
+            $('#frmExistingMother').submit();
+        }
+    });
+
+    // Ensure tabs are switching correctly
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+        $('.tab-pane').removeClass('show active');
+        $(target).addClass('show active');
+    });
+
+    // Hide forms initially
+    $('#frmMotherCrudObject').hide();
+    $('#frmExistingMother').hide();
+
+    // Show the appropriate form based on the active tab
+    $('#new-mother-tab').on('shown.bs.tab', function () {
+        $('#frmMotherCrudObject').show();
+        $('#frmExistingMother').hide();
+    });
+
+    $('#existing-mother-tab').on('shown.bs.tab', function () {
+        $('#frmMotherCrudObject').hide();
+        $('#frmExistingMother').show();
+    });
+
+    // Trigger the correct tab on page load
+    if ($('#new-mother-tab').hasClass('active')) {
+        $('#frmMotherCrudObject').show();
+        $('#frmExistingMother').hide();
+    } else if ($('#existing-mother-tab').hasClass('active')) {
+        $('#frmMotherCrudObject').hide();
+        $('#frmExistingMother').show();
+    }
+
+
+
+
+
+
+
+    // Handle form submission with AJAX
+    $('#frmFamilyCrudObject').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.status === 200) {
+                    $('#family').html(response.familyHtml);
+                    $('#familyCrudModal').modal('hide');
+                    toastr.success(response.success);
+                } else {
+                    toastr.error('Failed to update family information.');
+                }
+            },
+            error: function() {
+                toastr.error('An error occurred while updating the family information.');
+            }
+        });
+    });
+    /*====== end add new person or existing person as mother ======*/
 
 
 

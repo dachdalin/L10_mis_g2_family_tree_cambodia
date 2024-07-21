@@ -63,14 +63,21 @@ class Person extends Model
         return $this->hasMany(Photo::class);
     }
 
+    // Define the father relationship
     public function father()
     {
         return $this->belongsTo(Person::class, 'father_id');
     }
 
+    // Define the mother relationship
     public function mother()
     {
         return $this->belongsTo(Person::class, 'mother_id');
+    }
+
+    public function couple()
+    {
+        return $this->belongsTo(Couple::class, 'parents_id');
     }
 
     
