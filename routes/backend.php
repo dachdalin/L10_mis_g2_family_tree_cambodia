@@ -97,6 +97,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         Route::post('peoples/select-existing-father', 'selectExistingFather')->name('people.selectExistingFather');
 
 
+        // Route::get('peoples/get-existing-persons', 'getExistingPersons')->name('people.getExistingPersons');
+        Route::post('peoples/store-mother', 'storeMother')->name('people.storeMother');
+        Route::post('peoples/select-existing-mother', 'selectExistingMother')->name('people.selectExistingMother');
+
+        Route::post('people/updateFamily', 'updateFamily')->name('people.updateFamily');
+
+
 
         // Route::post('peoples/{id}', 'update')->name('people.update');
 

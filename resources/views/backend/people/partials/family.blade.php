@@ -8,9 +8,11 @@
         @if(!$person->father)
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#fatherCrudObjectModal">Add father</a>
         @endif
+        @if(!$person->mother)
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#motherCrudObjectModal">Add mother</a>
+        @endif
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Edit family</a>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#familyCrudModal">Edit family</a>
       </div>
     </div>
   </div>
@@ -26,9 +28,11 @@
         @else
             <span>No father recorded</span>
         @endif
+        @if(!$person->father)
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#existingFatherCrudObjectModal">
             <i class="fas fa-star"></i> 
         </a>
+        @endif
     </li>
     <li class="list-group-item">
         Mother 
@@ -42,19 +46,27 @@
         @endif
     </li>
     <li class="list-group-item">
-        Parents 
-        @if($person->father && $person->mother)
-            <a target="_blank" href="{{ route('admin.peoples.show', $person->father->id) }}">
-                {{ $person->father->firstname }} {{ $person->father->lastname }}
-            </a>
-            & 
-            <a href="{{ route('admin.peoples.show', $person->mother->id) }}">
-                {{ $person->mother->firstname }} {{ $person->mother->lastname }}
-            </a>
+        Parents
+        @if($person->parents_id)
+            @php
+                $couple = \App\Models\Couple::with(['person1', 'person2'])->find($person->parents_id);
+            @endphp
+            @if($couple)
+                <a target="_blank" href="{{ route('admin.peoples.show', $couple->person1->id) }}">
+                    {{ $couple->person1->firstname }} {{ $couple->person1->lastname }}
+                </a>
+                &
+                <a target="_blank" href="{{ route('admin.peoples.show', $couple->person2->id) }}">
+                    {{ $couple->person2->firstname }} {{ $couple->person2->lastname }}
+                </a>
+            @else
+                <span>No parents recorded</span>
+            @endif
         @else
             <span>No parents recorded</span>
         @endif
     </li>
+    
     <li class="list-group-item">
         Partner
        

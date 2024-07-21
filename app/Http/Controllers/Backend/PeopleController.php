@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Team;
 use App\Models\Photo;
+use App\Models\Couple;
 use App\Models\Gender;
 use App\Models\Person;
 use App\Models\Country;
@@ -437,13 +438,20 @@ class PeopleController extends Controller
         $crudRoutePath = $this->crudRoutePath;
 
         // $person = Person::findOrFail($id);
-        $person = Person::with('father', 'mother')->findOrFail($id);
+        // $person = Person::with('father', 'mother')->findOrFail($id);
+        $person = Person::with('father', 'mother', 'couple')->findOrFail($id);
         // $person = Person::with('team')->findOrFail($id);
         $genders = Gender::all();
         $persons = Person::all();
         $countries = Country::all();
 
-        return view('backend.people.show', compact('person', 'crudRoutePath', 'genders', 'persons', 'countries'));
+        // Filter couples based on the active team of the person
+        $team_id = $person->team_id;
+        $couples = Couple::with(['person1', 'person2'])
+                         ->where('team_id', $team_id)
+                         ->get();
+
+        return view('backend.people.show', compact('person', 'crudRoutePath', 'genders', 'persons', 'countries', 'couples'));
     }
 
     /**
@@ -584,6 +592,172 @@ class PeopleController extends Controller
     }
 
     /*====== end add new person as father ======*/
+
+
+    /*====== add new person as mother ======*/
+    public function storeMother(Request $request)
+    {
+        // Validate the request
+        $rules = [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'sex' => ['required', 'string', 'max:1'],
+            'dob' => ['nullable', 'date'],
+            'yob' => ['nullable', 'integer'],
+            'pob' => ['nullable', 'string', 'max:255'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'team_id' => ['required', 'exists:teams,id'], // Add this line to validate team_id
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error' => $validator->errors()->toArray()
+            ]);
+        }
+
+        // Store the new father
+        $mother = new Person;
+        $mother->firstname = $request->first_name;
+        $mother->lastname = $request->last_name;
+        $mother->birthname = $request->birth_name;
+        $mother->nickname = $request->nick_name;
+        $mother->sex = $request->sex;
+        $mother->dob = $request->dob;
+        $mother->yob = $request->yob;
+        $mother->pob = $request->pob;
+        $mother->team_id = $request->team_id; // Save the team_id for the mother
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $team = Team::findOrFail($request->team_id); // Fetch the team
+            $teamDirectory = 'photos/' . $team->name; // Create the directory structure
+
+            $image = $request->file('photo');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $filePath = $image->storeAs($teamDirectory, $name, 'public');
+            $mother->photo = json_encode([$name]);
+        }
+
+        $mother->save();
+
+        // Optionally link the mother to the person (child)
+        // Assuming you pass child_id in the request to associate the mother
+        if ($request->filled('child_id')) {
+            $child = Person::findOrFail($request->child_id);
+            $child->mother_id = $mother->id;
+            $child->save();
+        }
+
+        $person = Person::find($request->child_id);
+        $familyHtml = view('backend.people.partials.family', compact('person'))->render();
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Mother has been added successfully!',
+            'data' => $mother,
+            'familyHtml' => $familyHtml
+        ]);
+    }
+
+    public function selectExistingMother(Request $request)
+    {
+        // Validate the request
+        $rules = [
+            'existing_person' => ['required', 'exists:people,id'],
+            'child_id' => ['required', 'exists:people,id']
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $child = Person::findOrFail($request->child_id);
+        $child->mother_id = $request->existing_person;
+        $child->save();
+
+        $person = Person::find($request->child_id);
+        $familyHtml = view('backend.people.partials.family', compact('person'))->render();
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Mother has been added successfully!',
+            'familyHtml' => $familyHtml
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Mother has been linked successfully!',
+            'data' => $child
+        ]);
+    }
+
+    public function updateFamily(Request $request)
+    {
+        $person = Person::findOrFail($request->person_id);
+
+        $father_id = $request->father_id;
+        $mother_id = $request->mother_id;
+
+        // Update father, mother, and parents_id if new values are provided
+        if ($father_id) {
+            $person->father_id = $father_id;
+        }
+
+        if ($mother_id) {
+            $person->mother_id = $mother_id;
+        }
+
+        $couple_id = $request->parents_id;
+
+        // Check if father and mother IDs are not null and couple_id is not provided
+        if ($father_id && $mother_id && !$couple_id) {
+            // Check if the couple already exists
+            $couple = Couple::where(function ($query) use ($father_id, $mother_id) {
+                $query->where('person1_id', $father_id)
+                    ->where('person2_id', $mother_id);
+            })->orWhere(function ($query) use ($father_id, $mother_id) {
+                $query->where('person1_id', $mother_id)
+                    ->where('person2_id', $father_id);
+            })->first();
+
+            // If couple does not exist, create a new couple record
+            if (!$couple) {
+                $couple = Couple::create([
+                    'person1_id' => $father_id,
+                    'person2_id' => $mother_id,
+                    'team_id' => $person->team_id, // Assuming the team_id is the same as the child's team
+                ]);
+            }
+
+            $couple_id = $couple->id;
+        }
+
+        // Save the couple_id in the parents_id field if a couple_id is provided or created
+        if ($couple_id) {
+            $person->parents_id = $couple_id;
+        }
+
+        // Save the person record
+        $person->save();
+
+        $person = Person::find($request->person_id);
+        $familyHtml = view('backend.people.partials.family', compact('person'))->render();
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Family information updated successfully!',
+            'familyHtml' => $familyHtml
+        ]);
+    }
+
+
+    /*====== end add new person as mother ======*/
 
 
 
