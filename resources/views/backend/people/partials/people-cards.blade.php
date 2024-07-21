@@ -2,46 +2,46 @@
     .person-card {
       margin-bottom: 1rem;
     }
-  
+
     .person-card .card {
       border: 1px solid #e3e6f0;
       border-radius: 0.35rem;
     }
-  
+
     .person-card img {
       width: 100%;
       height: auto;
       border-top-left-radius: 0.35rem;
       border-top-right-radius: 0.35rem;
     }
-  
+
     .card-title a {
       text-decoration: none;
     }
-  
+
     .card-title span {
       font-size: 1.25rem;
       color: #666;
       vertical-align: middle;
     }
-  
+
     .card-footer {
       display: flex;
       justify-content: space-around;
     }
-  
+
     .card-body p {
       text-align: left;
     }
-  
+
     .card-body p a {
       text-decoration: none;
     }
-  
+
     .card-body p a:hover {
       text-decoration: underline;
     }
-  
+
     .card-footer .btn {
       flex: 1;
       margin: 0 0.5rem;
@@ -69,12 +69,12 @@
         border-radius: 5px;
     }
   </style>
-  
+
 
 @if($people->isNotEmpty())
-  <div class="row">
+  {{-- <div class="row"> --}}
     @foreach($people as $person)
-      <div class="col-md-3 person-card">
+      <div class="col-md-3 person-card mt-1 mt-md-3">
         <div class="card">
           @if($person->dod)
               <div class="banner">Deceased</div>
@@ -124,7 +124,7 @@
             <p class="card-text mb-1">Nickname: {{ $person->nickname ?? 'N/A' }}</p>
             <hr>
             <p class="card-text mb-1">
-              Father: 
+              Father:
               @if($person->father)
                 <a href="{{ route('admin.peoples.show', $person->father->id) }}" class="text-danger">
                   {{ $person->father->firstname }} {{ $person->father->lastname }} <span>&#9794;</span>
@@ -134,7 +134,7 @@
               @endif
             </p>
             <p class="card-text mb-1">
-              Mother: 
+              Mother:
               @if($person->mother)
                 <a href="{{ route('admin.peoples.show', $person->mother->id) }}" class="text-danger">
                   {{ $person->mother->firstname }} {{ $person->mother->lastname }} <span>&#9792;</span>
@@ -145,13 +145,13 @@
             </p>
           </div>
           <div class="card-footer d-flex justify-content-center">
-            <a href="{{ route('admin.peoples.show', $person->id) }}" class="btn btn-primary mr-2">Profile</a>
-            <a href="{{ route('admin.people.chart', $person->id) }}" class="btn btn-secondary">Family chart</a>
+            <a href="{{ route('admin.peoples.show', $person->id) }}" class="btn btn-sm btn-primary mr-2">Profile</a>
+            <a href="{{ route('admin.people.chart', $person->id) }}" class="btn btn-sm btn-secondary">Family chart</a>
           </div>
         </div>
       </div>
     @endforeach
-  </div>
+  {{-- </div> --}}
   <div class="d-flex justify-content-center">
     {{ $people->appends(request()->query())->links() }}
   </div>

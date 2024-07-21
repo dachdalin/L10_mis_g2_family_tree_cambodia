@@ -14,6 +14,8 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('asset/dist/css/toggle.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/toastrjs/toastr.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/sweetalert2/sweetalert2.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('asset/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   <style>
     input.ace-switch.ace-switch-yesno:checked::before {
       content: "Yes";
@@ -133,7 +135,7 @@
                 <div class="col-sm-6">
                   <div class="form-group" data-select2-id="29">
                     <label>Switch Family Team</label>
-                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" id="team-switch" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                    <select class="form-control select2  select2-hidden-accessible" style="width: 100%;" id="team-switch"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                       @foreach($teams as $team)
                         <option value="{{ $team->id }}" {{ $team->id == $active_team_id ? 'selected' : '' }}>
                           {{ $team->name }} {{ $team->id == $active_team_id ? '✔️' : '' }}
@@ -143,7 +145,6 @@
                   </div>
                 </div>
               </div>
-
               <div class="row" id="people-container">
                 @include('backend.people.partials.people-cards', ['people' => $people])
               </div>
@@ -181,6 +182,7 @@
   <script src="{{ asset('asset/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
   <!-- date-range-picker -->
   <script src="{{ asset('asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
+  <script src="{{ asset('asset/plugins/select2/js/select2.full.min.js') }}"></script>
   <script>
     $(document).ready(function() {
       $('#team-switch').change(function() {
@@ -333,5 +335,15 @@
       }
       $(showName).text(fileInput.files[0].name)
     };
+  </script>
+  <script>
+    $(function () {
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+        theme: 'bootstrap4'
+        })
+    });
   </script>
 @endpush

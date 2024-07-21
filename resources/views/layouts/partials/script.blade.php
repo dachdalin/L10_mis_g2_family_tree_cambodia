@@ -51,7 +51,6 @@
 <script src="{{ asset('asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script>
     $(document).ready(function() {
-        // alert(1);
         // var success_audio = "{{ URL::asset('sound/success.wav') }}";
         // var error_audio = "{{ URL::asset('sound/error.wav') }}";
         // var success = new Audio(success_audio);
@@ -84,6 +83,16 @@
         @endif
 
     });
+</script>
+<script>
+$(function () {
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+});
 </script>
 @stack('js')
 @stack('vendor-scripts')
