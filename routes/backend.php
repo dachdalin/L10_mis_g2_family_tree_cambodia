@@ -110,6 +110,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
         Route::get('people/{person}/ancestors', 'ancestors')->name('people.ancestors');
         Route::get('people/{person}/descendants', 'descendants')->name('people.descendants');
+
+        Route::get('people/{id}/siblings', 'getSiblings')->name('people.getSiblings');
+        Route::get('people/{id}/ancestors-descendants', 'getAncestorsDescendants')->name('people.getAncestorsDescendants');
+
+
+
         Route::get('people/{person}/chart', 'chart')->name('people.chart');
 
 
@@ -133,6 +139,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         Route::get('teams-setting', 'teams')->name('teams-setting');
         // Route::get('create/teams', 'add')->name('create.teams');
         // Route::get('users', 'users')->name('users');
+    });
+
+
+
+    Route::controller(App\Http\Controllers\Controller::class)->group(function () {
+        Route::get('birth-certificate', 'birthCertificate')->name('people.birthCertificate');
+
     });
 
 

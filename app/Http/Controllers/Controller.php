@@ -9,4 +9,8 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    public function birthCertificate(){
+        return view('backend.people.documents.people-certificate');
+    }
 }

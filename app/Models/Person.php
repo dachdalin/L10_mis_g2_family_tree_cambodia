@@ -77,7 +77,12 @@ class Person extends Model
 
     public function couple()
     {
-        return $this->belongsTo(Couple::class, 'parents_id');
+        return $this->hasMany(Couple::class, 'person1_id')->orWhere('person2_id', $this->id);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Person::class, 'parents_id');
     }
 
     

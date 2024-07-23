@@ -133,9 +133,18 @@ class PeopleController extends Controller
 
             $person->save();
 
+
+            // Fetch siblings excluding the current person
+            $siblings = Person::where(function($query) use ($person) {
+                $query->where('father_id', $person->father_id)
+                    ->orWhere('mother_id', $person->mother_id);
+            })
+            ->where('id', '!=', $person->id)
+            ->get();
+
             if ($request->ajax()) {
                 $crudRoutePath = $this->crudRoutePath;
-                $view = view('backend.people.partials.people-profiles', compact('person', 'crudRoutePath'))->render();
+                $view = view('backend.people.partials.people-profiles', compact('person', 'crudRoutePath', 'siblings'))->render();
                 return response()->json([
                     'status' => 200,
                     'type' => $type,
@@ -211,10 +220,18 @@ class PeopleController extends Controller
         $person->phone = $request->phone;
 
         $person->save();
+
+        // Fetch siblings excluding the current person
+            $siblings = Person::where(function($query) use ($person) {
+                $query->where('father_id', $person->father_id)
+                    ->orWhere('mother_id', $person->mother_id);
+            })
+            ->where('id', '!=', $person->id)
+            ->get();
         
         if ($request->ajax()) {
             $crudRoutePath = $this->crudRoutePath;
-            $view = view('backend.people.partials.people-profiles', compact('person', 'crudRoutePath'))->render();
+            $view = view('backend.people.partials.people-profiles', compact('person', 'crudRoutePath', 'siblings'))->render();
             return response()->json(['status' => 200, 'html' => $view, 'success' => $success]);
         }
 
@@ -288,9 +305,17 @@ class PeopleController extends Controller
             $person->metadata()->updateOrCreate(['key' => $key], ['value' => $value]);
         }
 
+        // Fetch siblings excluding the current person
+        $siblings = Person::where(function($query) use ($person) {
+            $query->where('father_id', $person->father_id)
+                ->orWhere('mother_id', $person->mother_id);
+        })
+        ->where('id', '!=', $person->id)
+        ->get();
+
         if ($request->ajax()) {
             $crudRoutePath = $this->crudRoutePath;
-            $view = view('backend.people.partials.people-profiles', compact('person', 'crudRoutePath'))->render();
+            $view = view('backend.people.partials.people-profiles', compact('person', 'crudRoutePath', 'siblings'))->render();
             return response()->json(['status' => 200, 'html' => $view, 'success' => $success]);
         }
 
@@ -439,8 +464,12 @@ class PeopleController extends Controller
 
         // $person = Person::findOrFail($id);
         // $person = Person::with('father', 'mother')->findOrFail($id);
-        $person = Person::with('father', 'mother', 'couple')->findOrFail($id);
+        // $person = Person::with('father', 'mother', 'couple')->findOrFail($id);
         // $person = Person::with('team')->findOrFail($id);
+        $person = Person::with('father', 'mother', 'father.father', 'father.mother', 'mother.father', 'mother.mother', 'children', 'children.partner')->findOrFail($id);
+        $ancestorData = $this->prepareAncestorData($person);
+        $descendantData = $this->prepareDescendantData($person);
+
         $genders = Gender::all();
         $persons = Person::all();
         $countries = Country::all();
@@ -451,8 +480,19 @@ class PeopleController extends Controller
                          ->where('team_id', $team_id)
                          ->get();
 
-        return view('backend.people.show', compact('person', 'crudRoutePath', 'genders', 'persons', 'countries', 'couples'));
+
+        // Fetch siblings excluding the current person
+        $siblings = Person::where(function($query) use ($person) {
+            $query->where('father_id', $person->father_id)
+                ->orWhere('mother_id', $person->mother_id);
+        })
+        ->where('id', '!=', $person->id)
+        ->get();
+
+        return view('backend.people.show', compact('person', 'crudRoutePath', 'genders', 'persons', 'countries', 'couples', 'siblings', 'ancestorData', 'descendantData'));
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -530,11 +570,21 @@ class PeopleController extends Controller
 
         $father->save();
 
-        // Optionally link the father to the person (child)
-        // Assuming you pass child_id in the request to associate the father
+        // Link the father to the child
         if ($request->filled('child_id')) {
             $child = Person::findOrFail($request->child_id);
             $child->father_id = $father->id;
+            
+            // Update or create couple if mother exists
+            if ($child->mother_id) {
+                $couple = Couple::updateOrCreate(
+                    ['person1_id' => $father->id, 'person2_id' => $child->mother_id],
+                    ['team_id' => $child->team_id]
+                );
+
+                $child->parents_id = $couple->id;
+            }
+            
             $child->save();
         }
 
@@ -566,7 +616,25 @@ class PeopleController extends Controller
         }
 
         $child = Person::findOrFail($request->child_id);
+
+        if ($child->father_id) {
+            return response()->json([
+                'status' => 400,
+                'error' => 'This child already has a father.'
+            ]);
+        }
+
         $child->father_id = $request->existing_person;
+
+        // Update or create couple if mother exists
+        if ($child->mother_id) {
+            $couple = Couple::updateOrCreate(
+                ['person1_id' => $child->father_id, 'person2_id' => $child->mother_id],
+                ['team_id' => $child->team_id]
+            );
+
+            $child->parents_id = $couple->id;
+        }
         $child->save();
 
         $person = Person::find($request->child_id);
@@ -642,11 +710,21 @@ class PeopleController extends Controller
 
         $mother->save();
 
-        // Optionally link the mother to the person (child)
-        // Assuming you pass child_id in the request to associate the mother
+        // Link the mother to the child
         if ($request->filled('child_id')) {
             $child = Person::findOrFail($request->child_id);
             $child->mother_id = $mother->id;
+            
+            // Update or create couple if father exists
+            if ($child->father_id) {
+                $couple = Couple::updateOrCreate(
+                    ['person1_id' => $child->father_id, 'person2_id' => $mother->id],
+                    ['team_id' => $child->team_id]
+                );
+    
+                $child->parents_id = $couple->id;
+            }
+            
             $child->save();
         }
 
@@ -678,7 +756,25 @@ class PeopleController extends Controller
         }
 
         $child = Person::findOrFail($request->child_id);
+
+        if ($child->mother_id) {
+            return response()->json([
+                'status' => 400,
+                'error' => 'This child already has a mother.'
+            ]);
+        }
+
         $child->mother_id = $request->existing_person;
+
+        // Update or create couple if father exists
+        if ($child->father_id) {
+            $couple = Couple::updateOrCreate(
+                ['person1_id' => $child->father_id, 'person2_id' => $child->mother_id],
+                ['team_id' => $child->team_id]
+            );
+
+            $child->parents_id = $couple->id;
+        }
         $child->save();
 
         $person = Person::find($request->child_id);
@@ -731,7 +827,7 @@ class PeopleController extends Controller
                 $couple = Couple::create([
                     'person1_id' => $father_id,
                     'person2_id' => $mother_id,
-                    'team_id' => $person->team_id, // Assuming the team_id is the same as the child's team
+                    'team_id' => $person->team_id,
                 ]);
             }
 
@@ -842,6 +938,68 @@ class PeopleController extends Controller
 
         return view('backend.people.descendants', compact('crudRoutePath', 'person'));
     }
+
+    public function getSiblings($id)
+    {
+        $person = Person::findOrFail($id);
+        $siblings = Person::where(function($query) use ($person) {
+            $query->where('father_id', $person->father_id)
+                ->orWhere('mother_id', $person->mother_id);
+        })
+        ->where('id', '!=', $person->id)
+        ->get();
+        
+        return view('backend.people.partials.siblings', compact('siblings'))->render();
+    }
+
+    public function getAncestorsDescendants($id)
+    {
+        $person = Person::with('father', 'mother', 'father.father', 'father.mother', 'mother.father', 'mother.mother', 'children', 'children.partner')->findOrFail($id);
+        $ancestorData = $this->prepareAncestorData($person);
+        $descendantData = $this->prepareDescendantData($person);
+
+        return response()->json([
+            'ancestors' => view('backend.people.partials.ancestors', compact('person', 'ancestorData'))->render(),
+            'descendants' => view('backend.people.partials.descendants', compact('person', 'descendantData'))->render(),
+        ]);
+    }
+
+
+    private function prepareAncestorData($person)
+    {
+        $data = [];
+        if ($person->father) {
+            $data[] = ['key' => $person->father->id, 'name' => $person->father->firstname . ' ' . $person->father->lastname, 'parent' => $person->father->father ? $person->father->father->id : null];
+            if ($person->father->father) {
+                $data[] = ['key' => $person->father->father->id, 'name' => $person->father->father->firstname . ' ' . $person->father->father->lastname];
+            }
+            if ($person->father->mother) {
+                $data[] = ['key' => $person->father->mother->id, 'name' => $person->father->mother->firstname . ' ' . $person->father->mother->lastname];
+            }
+        }
+        if ($person->mother) {
+            $data[] = ['key' => $person->mother->id, 'name' => $person->mother->firstname . ' ' . $person->mother->lastname, 'parent' => $person->mother->father ? $person->mother->father->id : null];
+            if ($person->mother->father) {
+                $data[] = ['key' => $person->mother->father->id, 'name' => $person->mother->father->firstname . ' ' . $person->mother->father->lastname];
+            }
+            if ($person->mother->mother) {
+                $data[] = ['key' => $person->mother->mother->id, 'name' => $person->mother->mother->firstname . ' ' . $person->mother->mother->lastname];
+            }
+        }
+        $data[] = ['key' => $person->id, 'name' => $person->firstname . ' ' . $person->lastname, 'parent' => $person->father ? $person->father->id : null];
+        return $data;
+    }
+
+    private function prepareDescendantData($person)
+    {
+        $data = [];
+        $data[] = ['key' => $person->id, 'name' => $person->firstname . ' ' . $person->lastname];
+        foreach ($person->children as $child) {
+            $data[] = ['key' => $child->id, 'name' => $child->firstname . ' ' . $child->lastname, 'parent' => $person->id];
+        }
+        return $data;
+    }
+
 
     public function chart($id)
     {
