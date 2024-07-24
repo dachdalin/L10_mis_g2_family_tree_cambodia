@@ -16,10 +16,11 @@
           </ul>
           <div class="tab-content" id="motherTabsContent">
 
-            
+
             <!-- Tab for adding a new mother -->
             <form id="frmMotherCrudObject" action="{{ route('admin.people.storeMother') }}" method="post" enctype="multipart/form-data">
               {{ csrf_field() }}
+              <input type="hidden" name="team_id" value="{{ $active_team_id }}">
               <div class="tab-pane fade show active" id="new-mother" role="tabpanel" aria-labelledby="new-mother-tab">
                 <div class="row">
                   <div class="col-md-6">
