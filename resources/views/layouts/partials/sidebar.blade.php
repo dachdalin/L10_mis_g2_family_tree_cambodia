@@ -130,6 +130,14 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{route('admin.people.birthCertificate')}}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            សំបុត្រកំណើរ
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>

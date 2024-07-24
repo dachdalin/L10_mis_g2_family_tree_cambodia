@@ -1,3 +1,164 @@
+<style>
+  /* Card Styling */
+  .card-ancestors-descendants {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      width: 300px; /* Adjust the width to be smaller */
+  }
+
+  .card-ancestors-descendants-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.25rem;
+      font-size: 14px; /* Smaller font size */
+  }
+
+  .input-group {
+      display: flex;
+      align-items: center;
+  }
+
+  .input-group button {
+      padding: 0.25rem 0.5rem; /* Smaller padding */
+      font-size: 14px; /* Smaller font size */
+  }
+
+  .input-group input {
+      width: 30px; /* Fixed width */
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 0.25rem;
+      margin: 0 0.25rem;
+      font-size: 14px; /* Smaller font size */
+  }
+
+  .card-body {
+      text-align: center;
+      padding: 0.25rem;
+  }
+
+  .tree-rtl {
+      direction: rtl;
+      transform: rotate(180deg);
+      overflow-x: auto;
+  }
+
+  .tree-rtl ul {
+      display: flex;
+      padding-top: 5px; 
+      padding-bottom: 5px;
+      position: relative;
+  }
+
+  .tree-rtl li {
+      list-style-type: none;
+      position: relative;
+      padding: 5px;
+      float: left; 
+      text-align: center;
+  }
+
+  .tree-rtl li::before, .tree-rtl li::after {
+      content: '';
+      position: absolute; 
+      top: 0; 
+      left: 50%;
+      border-top: 1px solid #ccc;
+      width: 50%; 
+      height: 5px;
+      transform: scaleX(-1);
+  }
+
+  .tree-rtl li::after {
+      right: auto; 
+      right: 50%;
+      border-left: 1px solid #ccc;
+  }
+
+  .tree-rtl li:only-child::after, .tree-rtl li:only-child::before {
+      display: none;
+  }
+
+  .tree-rtl li:only-child { padding-top: 0; }
+
+  .tree-rtl li:first-child::before, .tree-rtl li:last-child::after {
+      border: 0 none;
+  }
+
+  .tree-rtl li:last-child::before {
+      border-right: 1px solid #ccc;
+      border-radius: 0 5px 0 0;
+  }
+
+  .tree-rtl li:first-child::after {
+      border-radius: 5px 0 0 0;
+  }
+
+  .tree-rtl ul ul::before {
+      content: '';
+      position: absolute; 
+      top: 0; 
+      left: 50%;
+      border-left: 1px solid #ccc;
+      width: 0; 
+      height: 5px;
+  }
+
+  .tree-rtl li a {
+      border: 1px solid #ccc;
+      padding: 2px;
+      text-decoration: none;
+      color: #666;
+      font-family: arial, verdana, tahoma;
+      font-size: 10px; /* Smaller font size */
+      display: inline-block;
+      transform: rotate(180deg);
+      border-radius: 5px;
+      transition: all 0.2s;
+  }
+
+  .tree-rtl li a:hover, .tree-rtl li a:hover+ul li a {
+      background: #131826;
+      color: #fff;
+      border: 1px solid #94a0b4;
+  }
+
+  .tree-rtl li a:hover+ul li::after,
+  .tree-rtl li a:hover+ul li::before,
+  .tree-rtl li a:hover+ul::before,
+  .tree-rtl li a:hover+ul ul::before {
+      border-color:  #94a0b4;
+  }
+
+  .user-image {
+      width: 40px; /* Smaller image size */
+      height: 40px; /* Smaller image size */
+      overflow: hidden;
+      margin: 0 auto;
+  }
+
+  .user-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+  }
+
+  .w-16 {
+      width: 40px; /* Smaller width */
+      margin: 0 auto;
+  }
+
+  figcaption {
+      font-size: 10px; /* Smaller font size */
+      text-align: center;
+  }
+</style>
+
 <div class="card-header">
     <h3 class="card-title">{{ $person->firstname }} {{ $person->lastname }}</h3>
     @include('backend.people.people_buttons')            
@@ -208,62 +369,33 @@
               </div>
 
               <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4 class="section-title mb-0">Siblings</h4>
-                  <div class="dropdown">
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="siblingsDropdown">
-                      <a class="dropdown-item" href="#">Edit siblings</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item text-danger" href="#">Delete siblings</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <p>Nothing recorded.</p>
+                {{-- @include('backend.people.partials.siblings', ['siblings' => $siblings]) --}}
+                <div id="siblings-section">
+                  @include('backend.people.partials.siblings', ['siblings' => $siblings])
                 </div>
               </div>
 
             </div>
 
             <div class="col-md-6 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4 class="section-title mb-0">Descendants</h4>
-                  <div class="dropdown">
-                    <button class="btn btn-tool dropdown-toggle" type="button" id="descendantsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="descendantsDropdown">
-                      <a class="dropdown-item" href="#">Edit descendants</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item text-danger" href="#">Delete descendants</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body text-center">
-                  <img src="https://via.placeholder.com/100" alt="Descendant Picture" class="mb-2">
-                  <p>dara Mr</p>
-                </div>
+
+              {{-- card ancestors --}}
+              {{-- @include('backend.people.partials.ancestors', ['person' => $person]) --}}
+              
+              {{-- card descendants --}}
+              {{-- @include('backend.people.partials.descendants', ['person' => $person]) --}}
+              
+              {{-- card ancestors --}}
+              <div id="ancestors-section">
+                @include('backend.people.partials.ancestors', ['person' => $person])
               </div>
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4 class="section-title mb-0">Ancestors</h4>
-                  <div class="dropdown">
-                    <button class="btn btn-tool dropdown-toggle" type="button" id="ancestorsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ancestorsDropdown">
-                      <a class="dropdown-item" href="#">Edit ancestors</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item text-danger" href="#">Delete ancestors</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body text-center">
-                  <img src="https://via.placeholder.com/100" alt="Ancestor Picture" class="mb-2">
-                  <p>dara Mr</p>
-                </div>
+              
+              {{-- card descendants --}}
+              <div id="descendants-section">
+                  @include('backend.people.partials.descendants', ['person' => $person])
               </div>
+              
+
             </div>
 
           </div>
@@ -272,3 +404,5 @@
       </div>
     </div>
   </div>
+
+

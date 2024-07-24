@@ -36,6 +36,11 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
         type="text/css" media="screen" />
+
+
+    
+        
+
     @stack('css')
     @stack('page-styles')
 

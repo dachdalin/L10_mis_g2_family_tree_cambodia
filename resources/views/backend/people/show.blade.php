@@ -972,8 +972,11 @@
     // Handle form submission for adding a new father
     $('#frmMotherCrudObject').on('submit', function (e) {
         e.preventDefault();
+        console.log('Submitting new mother form...'); // Debugging statement
         var formData = new FormData(this);
         var actionUrl = $(this).attr('action');
+        console.log('Form data:', formData); // Debugging statement
+        console.log('Action URL:', actionUrl); // Debugging statement
 
         $.ajax({
             type: 'POST',
@@ -985,6 +988,7 @@
                 $(document).find('span.error-text').text('');
             },
             success: function (res) {
+                console.log('Response received:', res); // Debugging statement
                 if (res.status === 400) {
                     $.each(res.error, function (prefix, val) {
                         $('span.' + prefix + '_error').text(val[0]);
@@ -1080,11 +1084,6 @@
     }
 
 
-
-
-
-
-
     // Handle form submission with AJAX
     $('#frmFamilyCrudObject').on('submit', function(e) {
         e.preventDefault();
@@ -1108,6 +1107,45 @@
         });
     });
     /*====== end add new person or existing person as mother ======*/
+
+
+    /*====== Function to update siblings section ======*/
+    function updateSiblings(personId) {
+        $.ajax({
+            url: `/people/${personId}/siblings`,
+            method: 'GET',
+            success: function (data) {
+                $('#siblings-section').html(data);
+            },
+            error: function (error) {
+                console.error('Error fetching siblings:', error);
+            }
+        });
+    }
+    /*====== End Function to update siblings section ======*/
+
+
+    /*====== Function to update ancestors and descendants sections ======*/
+    function updateAncestorsDescendants(personId) {
+        $.ajax({
+            url: `/people/${personId}/ancestors-descendants`,
+            method: 'GET',
+            success: function (data) {
+                $('#ancestors-section').html(data.ancestors);
+                $('#descendants-section').html(data.descendants);
+            },
+            error: function (error) {
+                console.error('Error fetching ancestors and descendants:', error);
+            }
+        });
+    }
+
+    // Call these functions whenever necessary, for example, after updating family information
+    var personId = {{ $person->id }}; // Get the current person's ID
+    updateSiblings(personId);
+    updateAncestorsDescendants(personId);
+    /*====== End Function to update ancestors and descendants sections ======*/
+
 
 
 

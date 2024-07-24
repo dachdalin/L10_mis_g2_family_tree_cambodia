@@ -21,6 +21,7 @@
             <form id="frmMotherCrudObject" action="{{ route('admin.people.storeMother') }}" method="post" enctype="multipart/form-data">
               {{ csrf_field() }}
               <input type="hidden" name="team_id" value="{{ $active_team_id }}">
+              <input type="hidden" name="child_id" id="child_id" value="{{ $person->id }}"> <!-- Assuming $person is the child -->
               <div class="tab-pane fade show active" id="new-mother" role="tabpanel" aria-labelledby="new-mother-tab">
                 <div class="row">
                   <div class="col-md-6">
