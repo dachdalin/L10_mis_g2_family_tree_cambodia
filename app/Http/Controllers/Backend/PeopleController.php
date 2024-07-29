@@ -34,7 +34,8 @@ class PeopleController extends Controller
         $data['crudRoutePath'] = $this->crudRoutePath;
         $data['updateMode'] = $this->updateMode;
         $data['teams'] = Team::all();
-        $data['people'] = Person::paginate(10);
+        $data['people'] = Person::where('team_id', session('active_team_id'))->paginate(10);
+
 
         return view('backend.people.search', $data);
     }

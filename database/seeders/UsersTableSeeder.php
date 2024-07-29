@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
                 'profile_photo_path' => null,
                 'language' => 'kh',
                 'timezone' => 'UTC',
-                'is_developer' => false,
+                'is_developer' => true,
                 'seen_at' => now(),
                 'remember_token' => null,
             ],
