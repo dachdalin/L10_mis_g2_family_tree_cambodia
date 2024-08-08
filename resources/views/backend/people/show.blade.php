@@ -135,7 +135,7 @@
   {{-- Modal for edit familyCrudModal --}}
   @include('backend.people.templates.familyCrudModal')
 
-  {{-- Modal for add parent --}}
+  {{-- Modal for add partner --}}
   @include('backend.people.templates.partnerCrudModal')
 
   {{-- Modal for add child --}}
@@ -1107,6 +1107,266 @@
         });
     });
     /*====== end add new person or existing person as mother ======*/
+
+
+
+    // Add partner
+    $(document).ready(function () {
+    // Initialize Select2 plugin
+    $('.select2').select2();
+
+    // Load existing persons into the select dropdown for assigning as partner
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+        if (target === '#existing-partner') {
+            $.get('{{ route("admin.people.getExistingPersons") }}')
+                .done(function (data) {
+                    var existingPersonSelect = $('#existing_partner');
+                    existingPersonSelect.empty();
+                    existingPersonSelect.append('<option value="">Select Person</option>');
+                    $.each(data, function (index, person) {
+                        existingPersonSelect.append('<option value="' + person.id + '">' + person.firstname + ' ' + person.lastname + '</option>');
+                    });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching existing persons:', textStatus, errorThrown);
+                });
+        }
+    });
+
+    // Handle form submission for adding a new partner
+    $('#frmPartnerCrudObject').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var actionUrl = $(this).attr('action');
+
+        $.ajax({
+            type: 'POST',
+            url: actionUrl,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-text').text('');
+            },
+            success: function (res) {
+                console.log('partner:' res);
+                if (res.status === 400) {
+                    $.each(res.error, function (prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                } else {
+                    $('#frmPartnerCrudObject').trigger("reset");
+                    $('#partnerCrudObjectModal').modal('hide');
+                    toastr.success(res.success);
+
+                    // Update the family section
+                    $('#family').html(res.familyHtml);
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    });
+
+    // Handle form submission for selecting an existing partner
+    $('#frmExistingPartner').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var actionUrl = $(this).attr('action');
+
+        $.ajax({
+            type: 'POST',
+            url: actionUrl,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-text').text('');
+            },
+            success: function (res) {
+                if (res.status === 400) {
+                    $.each(res.error, function (prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                } else {
+                    $('#frmExistingPartner').trigger("reset");
+                    $('#partnerCrudObjectModal').modal('hide');
+                    toastr.success(res.success);
+
+                    // Update the family section
+                    $('#family').html(res.familyHtml);
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    });
+
+    // Ensure tabs are switching correctly
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+        $('.tab-pane').removeClass('show active');
+        $(target).addClass('show active');
+    });
+
+    // Hide forms initially
+    $('#frmPartnerCrudObject').hide();
+    $('#frmExistingPartner').hide();
+
+    // Show the appropriate form based on the active tab
+    $('#new-partner-tab').on('shown.bs.tab', function () {
+        $('#frmPartnerCrudObject').show();
+        $('#frmExistingPartner').hide();
+    });
+
+    $('#existing-partner-tab').on('shown.bs.tab', function () {
+        $('#frmPartnerCrudObject').hide();
+        $('#frmExistingPartner').show();
+    });
+
+    // Trigger the correct tab on page load
+    if ($('#new-partner-tab').hasClass('active')) {
+        $('#frmPartnerCrudObject').show();
+        $('#frmExistingPartner').hide();
+    } else if ($('#existing-partner-tab').hasClass('active')) {
+        $('#frmPartnerCrudObject').hide();
+        $('#frmExistingPartner').show();
+    }
+});
+
+
+
+
+
+    // Add child
+    $(document).ready(function () {
+    // Initialize Select2 plugin
+    $('.select2').select2();
+
+    // Load existing persons into the select dropdown for assigning as child
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+        if (target === '#existing-child') {
+            $.get('{{ route("admin.people.getExistingPersons") }}')
+                .done(function (data) {
+                    var existingPersonSelect = $('#existing_child');
+                    existingPersonSelect.empty();
+                    existingPersonSelect.append('<option value="">Select Person</option>');
+                    $.each(data, function (index, person) {
+                        existingPersonSelect.append('<option value="' + person.id + '">' + person.firstname + ' ' + person.lastname + '</option>');
+                    });
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching existing persons:', textStatus, errorThrown);
+                });
+        }
+    });
+
+    // Handle form submission for adding a new child
+    $('#frmChildCrudObject').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var actionUrl = $(this).attr('action');
+
+        $.ajax({
+            type: 'POST',
+            url: actionUrl,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-text').text('');
+            },
+            success: function (res) {
+                if (res.status === 400) {
+                    $.each(res.error, function (prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                } else {
+                    $('#frmChildCrudObject').trigger("reset");
+                    $('#childCrudObjectModal').modal('hide');
+                    toastr.success(res.success);
+
+                    // Update the family section
+                    $('#family').html(res.familyHtml);
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    });
+
+    // Handle form submission for selecting an existing child
+    $('#frmExistingChild').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var actionUrl = $(this).attr('action');
+
+        $.ajax({
+            type: 'POST',
+            url: actionUrl,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-text').text('');
+            },
+            success: function (res) {
+                if (res.status === 400) {
+                    $.each(res.error, function (prefix, val) {
+                        $('span.' + prefix + '_error').text(val[0]);
+                    });
+                } else {
+                    $('#frmExistingChild').trigger("reset");
+                    $('#childCrudObjectModal').modal('hide');
+                    toastr.success(res.success);
+
+                    // Update the family section
+                    $('#family').html(res.familyHtml);
+                }
+            },
+            error: function (error) {
+                console.log('Error:', error);
+            }
+        });
+    });
+
+    // Ensure tabs are switching correctly
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+        $('.tab-pane').removeClass('show active');
+        $(target).addClass('show active');
+    });
+
+    // Hide forms initially
+    $('#frmChildCrudObject').hide();
+    $('#frmExistingChild').hide();
+
+    // Show the appropriate form based on the active tab
+    $('#new-child-tab').on('shown.bs.tab', function () {
+        $('#frmChildCrudObject').show();
+        $('#frmExistingChild').hide();
+    });
+
+    $('#existing-child-tab').on('shown.bs.tab', function () {
+        $('#frmChildCrudObject').hide();
+        $('#frmExistingChild').show();
+    });
+
+    // Trigger the correct tab on page load
+    if ($('#new-child-tab').hasClass('active')) {
+        $('#frmChildCrudObject').show();
+        $('#frmExistingChild').hide();
+    } else if ($('#existing-child-tab').hasClass('active')) {
+        $('#frmChildCrudObject').hide();
+        $('#frmExistingChild').show();
+    }
+});
+
 
 
     /*====== Function to update siblings section ======*/

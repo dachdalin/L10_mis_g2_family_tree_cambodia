@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: my-laravel-app
+    env: php
+    buildCommand: |
+      composer install &&
+      npm install &&
+      npm run build &&
+      php artisan config:cache &&
+      php artisan route:cache &&
+      php artisan view:cache
+    startCommand: |
+      php artisan migrate:fresh --seed --force &&
+      php artisan storage:link &&
+      php -S 0.0.0.0:10000 -t public
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        value: base64:h6tG63fi9NBs9iSpM1WiOuSeIYtZyi3OtR9jN89D8FQ=
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: dpg-cqlk2vg8fa8c73b1nmcg-a
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: attendance_qrcode_db
+      - key: DB_USERNAME
+        value: attendance_qrcode_db
+      - key: DB_PASSWORD
+        value: iBRXfreaAvchhmJ1KrPflcB0aSBHBMaJ
+      - key: DATABASE_URL
+        value: postgresql://attendance_qrcode_db:iBRXfreaAvchhmJ1KrPflcB0aSBHBMaJ@dpg-cqlk2vg8fa8c73b1nmcg-a/attendance_qrcode_db
+    plan: free # Adjust as you needed
+    autoDeploy: true

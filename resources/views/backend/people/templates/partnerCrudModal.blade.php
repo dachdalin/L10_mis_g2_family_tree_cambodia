@@ -1,7 +1,7 @@
 <div class="modal fade" id="partnerCrudObjectModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <form id="frmPartnerCrudObject" action="" method="post" enctype="multipart/form-data">
+      <form id="frmPartnerCrudObject" action="{{ route('admin.people.storePartner') }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="modal-header">
           <h5 class="modal-title">Add Partner or Relationship</h5>
@@ -19,6 +19,7 @@
           <div class="tab-content" id="partnerTabsContent">
             <!-- Tab for adding a new partner -->
             <div class="tab-pane fade show active" id="new-partner" role="tabpanel" aria-labelledby="new-partner-tab">
+              <!-- New Partner Form Fields -->
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -95,7 +96,6 @@
                     <span class="text-danger error-text photo_error"></span>
                   </div>
                 </div>
-                <!-- Additional fields start here -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="start_date" class="form-control-label mb-1">Start Date:</label>
@@ -103,7 +103,6 @@
                     <span class="text-danger error-text start_date_error"></span>
                   </div>
                 </div>
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="end_date" class="form-control-label mb-1">End Date:</label>
@@ -111,7 +110,6 @@
                     <span class="text-danger error-text end_date_error"></span>
                   </div>
                 </div>
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label mb-1">Marriage:?</label>
@@ -119,13 +117,8 @@
                       <input class="form-check-input" type="radio" name="marriage_status" id="marriedYes" value="yes">
                       <label class="form-check-label" for="marriedYes">Yes</label>
                     </div>
-                    {{-- <div class="form-check">
-                      <input class="form-check-input" type="radio" name="marriage_status" id="marriedNo" value="no" checked>
-                      <label class="form-check-label" for="marriedNo">No</label>
-                    </div> --}}
                   </div>
                 </div>
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label mb-1">Ended:?</label>
@@ -133,20 +126,13 @@
                       <input class="form-check-input" type="radio" name="ended_status" id="endedYes" value="yes">
                       <label class="form-check-label" for="endedYes">Yes</label>
                     </div>
-                    {{-- <div class="form-check">
-                      <input class="form-check-input" type="radio" name="ended_status" id="endedNo" value="no" checked>
-                      <label class="form-check-label" for="endedNo">No</label>
-                    </div> --}}
                   </div>
                 </div>
-
-                <!-- Additional fields end here -->
               </div>
             </div>
             
             <!-- Tab for selecting an existing partner -->
             <div class="tab-pane fade" id="existing-partner" role="tabpanel" aria-labelledby="existing-partner-tab">
-
               <div class="form-group">
                 <label for="existing_partner" class="form-control-label mb-1">Select Existing Person:</label>
                 <select id="existing_partner" name="existing_partner" class="form-control select2">
@@ -155,10 +141,7 @@
                 </select>
                 <span class="text-danger error-text existing_partner_error"></span>
               </div>
-
-              <!-- Additional fields start here -->
               <div class="row">
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="start_date" class="form-control-label mb-1">Start Date:</label>
@@ -166,7 +149,6 @@
                     <span class="text-danger error-text start_date_error"></span>
                   </div>
                 </div>
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="end_date" class="form-control-label mb-1">End Date:</label>
@@ -174,7 +156,6 @@
                     <span class="text-danger error-text end_date_error"></span>
                   </div>
                 </div>
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label mb-1">Marriage:</label>
@@ -182,40 +163,19 @@
                       <input class="form-check-input" type="radio" name="marriage_status" id="marriedYes" value="yes">
                       <label class="form-check-label" for="marriedYes">Yes</label>
                     </div>
-                    {{-- <div class="form-check">
-                      <input class="form-check-input" type="radio" name="marriage_status" id="marriedNo" value="no" checked>
-                      <label class="form-check-label" for="marriedNo">No</label>
-                    </div> --}}
                   </div>
-    
                 </div>
-
                 <div class="col-md-6">
-    
                   <div class="form-group">
                     <label class="form-control-label mb-1">Ended:</label>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="ended_status" id="endedYes" value="yes">
                       <label class="form-check-label" for="endedYes">Yes</label>
                     </div>
-                    {{-- <div class="form-check">
-                      <input class="form-check-input" type="radio" name="ended_status" id="endedNo" value="no" checked>
-                      <label class="form-check-label" for="endedNo">No</label>
-                    </div> --}}
                   </div>
-    
                 </div>
-                
               </div>
-
-           
-
-            <!-- Additional fields end here -->
-
-              
-
             </div>
-
           </div>
         </div>
         <div class="modal-footer">

@@ -8,7 +8,7 @@
     .tree-rtl {
         direction: rtl;
         transform: rotate(180deg);
-        font-size: 12px; /* Adjusted font size for better readability */
+        font-size: 12px;
     }
 
     .tree-rtl ul {
@@ -16,7 +16,7 @@
         width: 100%;
         overflow-x: auto;
         margin-bottom: 5px;
-        padding-top: 10px; /* Adjusted padding */
+        padding-top: 10px;
         position: relative;
         transition: all 0.2s;
         -webkit-transition: all 0.2s;
@@ -28,7 +28,7 @@
         text-align: center;
         list-style-type: none;
         position: relative;
-        padding: 10px 5px 0 5px; /* Adjusted padding */
+        padding: 10px 5px 0 5px;
         transition: all 0.2s;
         -webkit-transition: all 0.2s;
         -moz-transition: all 0.2s;
@@ -42,7 +42,7 @@
         left: 50%;
         border-top: 1px solid #ccc;
         width: 50%;
-        height: 15px; /* Adjusted height */
+        height: 15px;
         transform: scaleX(-1);
     }
 
@@ -86,16 +86,16 @@
         left: 50%;
         border-left: 1px solid #ccc;
         width: 0;
-        height: 15px; /* Adjusted height */
+        height: 15px;
     }
 
     .tree-rtl li a {
         border: 1px solid #ccc;
-        padding: 5px; /* Adjusted padding */
+        padding: 5px;
         text-decoration: none;
         color: #666;
         font-family: arial, verdana, tahoma;
-        font-size: 12px; /* Adjusted font size */
+        font-size: 12px;
         display: inline-block;
         transform: rotate(180deg);
         border-radius: 5px;
@@ -107,7 +107,7 @@
     }
 
     .tree-rtl li a img {
-        width: 100px; /* Adjusted image size */
+        width: 100px;
         height: auto;
         border-radius: 50%;
     }
@@ -115,7 +115,7 @@
     .tree-rtl li a span {
         display: block;
         margin-top: 5px;
-        font-size: 11px; /* Adjusted font size */
+        font-size: 11px;
     }
 
     .tree-rtl li a:hover,
@@ -133,9 +133,8 @@
     }
 
     .hidden {
-    display: none;
-}
-
+        display: none;
+    }
 </style>
 
 <div class="card">
@@ -225,12 +224,11 @@
     </div>
 </div>
 
-
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     let ancestorLevel = parseInt(document.getElementById('ancestorLevel').value);
     updateTreeVisibility(ancestorLevel);
+    console.log('Initial ancestor level:', ancestorLevel);
 });
 
 function changeAncestorLevel(level) {
@@ -241,11 +239,16 @@ function changeAncestorLevel(level) {
     if (newLevel > 0) {
         ancestorLevel.value = newLevel;
         updateTreeVisibility(newLevel);
+        console.log('Changed ancestor level:', newLevel);
     }
 
     // Disable buttons based on the level
     document.querySelector('.input-group-prepend button').disabled = (newLevel <= 1);
     document.querySelector('.input-group-append button').disabled = (document.querySelectorAll('.tree-rtl ul.depth-' + newLevel).length === 0);
+    console.log('Disable state:', {
+        minusButton: document.querySelector('.input-group-prepend button').disabled,
+        plusButton: document.querySelector('.input-group-append button').disabled
+    });
 }
 
 function updateTreeVisibility(level) {
@@ -253,11 +256,11 @@ function updateTreeVisibility(level) {
         let depth = ul.className.match(/depth-(\d+)/);
         if (depth && parseInt(depth[1]) <= level) {
             ul.classList.remove('hidden');
+            console.log('Showing:', ul.className);
         } else {
             ul.classList.add('hidden');
+            console.log('Hiding:', ul.className);
         }
     });
 }
-
-
 </script>
