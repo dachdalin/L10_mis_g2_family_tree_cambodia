@@ -855,6 +855,243 @@ class PeopleController extends Controller
 
 
     /*====== end add new person as mother ======*/
+    
+    /*====== Add partner ======*/
+    public function storePartner(Request $request)
+    {
+        // Validation rules
+        $rules = [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'sex' => 'required|string|max:1',
+            'dob' => 'nullable|date',
+            'yob' => 'nullable|integer',
+            'pob' => 'nullable|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'team_id' => 'nullable|exists:teams,id',
+            'child_id' => 'nullable|exists:people,id',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'marriage_status' => 'nullable|string',
+            'ended_status' => 'nullable|string'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error' => $validator->errors()->toArray()
+            ]);
+        }
+
+        // Store the new partner
+        $partner = new Person;
+        $partner->firstname = $request->first_name;
+        $partner->lastname = $request->last_name;
+        $partner->birthname = $request->birth_name;
+        $partner->nickname = $request->nick_name;
+        $partner->sex = $request->sex;
+        $partner->dob = $request->dob;
+        $partner->yob = $request->yob;
+        $partner->pob = $request->pob;
+        $partner->team_id = $request->team_id;
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $team = Team::findOrFail($request->team_id);
+            $teamDirectory = 'photos/' . $team->name;
+            $image = $request->file('photo');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $filePath = $image->storeAs($teamDirectory, $name, 'public');
+            $partner->photo = json_encode([$name]);
+        }
+
+        $partner->save();
+
+        // Link the partner to the person to become couple
+        if ($request->filled('child_id')) {
+            $child = Person::findOrFail($request->child_id);
+            $couple = Couple::updateOrCreate(
+                ['person1_id' => $child->id, 'person2_id' => $partner->id],
+                [
+                    'start_date' => $request->start_date,
+                    'end_date' => $request->end_date,
+                    'is_married' => $request->marriage_status === 'yes',
+                    'has_ended' => $request->ended_status === 'yes',
+                    'team_id' => $child->team_id
+                ]
+            );
+
+            $child->partner_id = $partner->id;
+            $child->save();
+        }
+
+        $person = Person::find($request->child_id);
+        $familyHtml = view('backend.people.partials.family', compact('person'))->render();
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Partner has been added successfully!',
+            'data' => $partner,
+            'familyHtml' => $familyHtml
+        ]);
+    }
+
+
+    public function selectExistingPartner(Request $request)
+    {
+        // Validation rules
+        $rules = [
+            'existing_person' => 'required|exists:people,id',
+            'child_id' => 'required|exists:people,id',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'marriage_status' => 'nullable|string',
+            'ended_status' => 'nullable|string'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $child = Person::findOrFail($request->child_id);
+        $partner = Person::findOrFail($request->existing_person);
+
+        $couple = Couple::updateOrCreate(
+            ['person1_id' => $child->id, 'person2_id' => $partner->id],
+            [
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'is_married' => $request->marriage_status === 'yes',
+                'has_ended' => $request->ended_status === 'yes',
+                'team_id' => $child->team_id
+            ]
+        );
+
+        $child->partner_id = $partner->id;
+        $child->save();
+
+        $person = Person::find($request->child_id);
+        $familyHtml = view('backend.people.partials.family', compact('person'))->render();
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Partner has been linked successfully!',
+            'familyHtml' => $familyHtml
+        ]);
+    }
+
+
+
+
+    // Add child
+    public function storeChild(Request $request)
+    {
+        // Validation rules
+        $rules = [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'sex' => 'required|string|max:1',
+            'dob' => 'nullable|date',
+            'yob' => 'nullable|integer',
+            'pob' => 'nullable|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'team_id' => 'nullable|exists:teams,id',
+            'parent_id' => 'nullable|exists:people,id'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error' => $validator->errors()->toArray()
+            ]);
+        }
+
+        // Store the new child
+        $child = new Person;
+        $child->firstname = $request->first_name;
+        $child->lastname = $request->last_name;
+        $child->birthname = $request->birth_name;
+        $child->nickname = $request->nick_name;
+        $child->sex = $request->sex;
+        $child->dob = $request->dob;
+        $child->yob = $request->yob;
+        $child->pob = $request->pob;
+        $child->team_id = $request->team_id;
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $team = Team::findOrFail($request->team_id);
+            $teamDirectory = 'photos/' . $team->name;
+            $image = $request->file('photo');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $filePath = $image->storeAs($teamDirectory, $name, 'public');
+            $child->photo = json_encode([$name]);
+        }
+
+        $child->save();
+
+        // Link the child to the parent
+        if ($request->filled('parent_id')) {
+            $parent = Person::findOrFail($request->parent_id);
+            $child->parent_id = $parent->id;
+            $child->save();
+        }
+
+        $person = Person::find($request->parent_id);
+        $familyHtml = view('backend.people.partials.family', compact('person'))->render();
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Child has been added successfully!',
+            'data' => $child,
+            'familyHtml' => $familyHtml
+        ]);
+    }
+
+
+    public function selectExistingChild(Request $request)
+    {
+        // Validation rules
+        $rules = [
+            'existing_person' => 'required|exists:people,id',
+            'parent_id' => 'required|exists:people,id'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error' => $validator->errors()->toArray()
+            ]);
+        }
+
+        $parent = Person::findOrFail($request->parent_id);
+        $child = Person::findOrFail($request->existing_person);
+
+        $child->parent_id = $parent->id;
+        $child->save();
+
+        $person = Person::find($request->parent_id);
+        $familyHtml = view('backend.people.partials.family', compact('person'))->render();
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Child has been linked successfully!',
+            'familyHtml' => $familyHtml
+        ]);
+    }
+
+
 
 
 

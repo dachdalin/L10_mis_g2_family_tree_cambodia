@@ -100,10 +100,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         // Route::get('peoples/get-existing-persons', 'getExistingPersons')->name('people.getExistingPersons');
         Route::post('peoples/store-mother', 'storeMother')->name('people.storeMother');
         Route::post('peoples/select-existing-mother', 'selectExistingMother')->name('people.selectExistingMother');
-
+        
         Route::post('people/updateFamily', 'updateFamily')->name('people.updateFamily');
-
-
+        
+        Route::post('peoples/store-partner', 'storePartner')->name('people.storePartner');
+        Route::post('peoples/select-existing-partner', 'selectExistingPartner')->name('people.selectExistingPartner');
+        
+        Route::post('peoples/store-child', 'storeChild')->name('people.storeChild');
+        Route::post('peoples/select-existing-child', 'selectExistingChild')->name('people.selectExistingChild');
 
         // Route::post('peoples/{id}', 'update')->name('people.update');
 
