@@ -50,6 +50,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+
+    /*===== Relationship =====*/ 
+
     public function roles()
     {
       return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
@@ -58,5 +61,11 @@ class User extends Authenticatable
     public function teams()
     {
         return $this->hasMany(Team::class, 'user_id');
+    }
+
+    /*===== Relationship for current session team or active team =====*/ 
+    public function currentTeam()
+    {
+        return $this->belongsTo(Team::class, 'current_team_id');
     }
 }
