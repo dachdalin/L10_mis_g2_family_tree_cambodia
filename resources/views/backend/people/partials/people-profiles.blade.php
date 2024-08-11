@@ -50,7 +50,7 @@
 
   .tree-rtl ul {
       display: flex;
-      padding-top: 5px; 
+      padding-top: 5px;
       padding-bottom: 5px;
       position: relative;
   }
@@ -59,23 +59,23 @@
       list-style-type: none;
       position: relative;
       padding: 5px;
-      float: left; 
+      float: left;
       text-align: center;
   }
 
   .tree-rtl li::before, .tree-rtl li::after {
       content: '';
-      position: absolute; 
-      top: 0; 
+      position: absolute;
+      top: 0;
       left: 50%;
       border-top: 1px solid #ccc;
-      width: 50%; 
+      width: 50%;
       height: 5px;
       transform: scaleX(-1);
   }
 
   .tree-rtl li::after {
-      right: auto; 
+      right: auto;
       right: 50%;
       border-left: 1px solid #ccc;
   }
@@ -101,11 +101,11 @@
 
   .tree-rtl ul ul::before {
       content: '';
-      position: absolute; 
-      top: 0; 
+      position: absolute;
+      top: 0;
       left: 50%;
       border-left: 1px solid #ccc;
-      width: 0; 
+      width: 0;
       height: 5px;
   }
 
@@ -161,13 +161,13 @@
 
 <div class="card-header">
     <h3 class="card-title">{{ $person->firstname }} {{ $person->lastname }}</h3>
-    @include('backend.people.people_buttons')            
+    @include('backend.people.people_buttons')
   </div>
 
   <div class="card-body">
     <div class="container mt-4">
       <div class="row">
-        
+
         <div class="col-md-4">
           <div class="card profile-card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -186,9 +186,9 @@
                 </div>
               </div>
             </div>
-            
+
             <div id="profile-section" class="card-body text-center">
-             
+
                 <div class="card position-relative">
                     @if($person->dod)
                         <div class="banner">Deceased</div>
@@ -293,7 +293,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <style>
                 .banner-light-green {
                     position: absolute;
@@ -318,8 +318,8 @@
                     border-radius: 5px;
                 }
             </style>
-            
-            
+
+
           </div>
         </div>
 
@@ -331,11 +331,10 @@
               <div class="card" id="family">
                 @include('backend.people.partials.family', ['person' => $person])
               </div>
-
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4 class="section-title mb-0">Partners</h4>
-                  <div class="dropdown">
+                  <h4 class="section-title mr-auto">Partners</h4>
+                  <div class="dropdown ml-auto">
                     <button class="btn btn-tool dropdown-toggle" type="button" id="partnersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-bars"></i>
                     </button>
@@ -352,8 +351,8 @@
 
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4 class="section-title mb-0">Children</h4>
-                  <div class="dropdown">
+                  <h4 class="section-title mr-auto">Children</h4>
+                  <div class="dropdown ml-auto">
                     <button class="btn btn-tool dropdown-toggle" type="button" id="childrenDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-bars"></i>
                     </button>
@@ -381,20 +380,20 @@
 
               {{-- card ancestors --}}
               {{-- @include('backend.people.partials.ancestors', ['person' => $person]) --}}
-              
+
               {{-- card descendants --}}
               {{-- @include('backend.people.partials.descendants', ['person' => $person]) --}}
-              
+
               {{-- card ancestors --}}
               <div id="ancestors-section">
                 @include('backend.people.partials.ancestors', ['person' => $person])
               </div>
-              
+
               {{-- card descendants --}}
               <div id="descendants-section">
                   @include('backend.people.partials.descendants', ['person' => $person])
               </div>
-              
+
 
             </div>
 

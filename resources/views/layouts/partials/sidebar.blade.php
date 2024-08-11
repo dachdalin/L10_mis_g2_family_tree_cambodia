@@ -49,7 +49,7 @@
                     </ul>
                 </li>
 
-                <li class="nav-header">គ្រប់គ្រងអាសយដ្ឋាន</li>
+                {{-- <li class="nav-header">គ្រប់គ្រងអាសយដ្ឋាន</li>
                 <li class="nav-item @if(request()->routeIs('admin.provinces*','admin.districts*')) menu-is-opening menu-open @endif">
                     <a href="{{ route('admin.provinces.index') }}" class="nav-link @if(request()->routeIs('admin.provinces*')) active @endif">
                         <i class="nav-icon fas fa-copy"></i>
@@ -84,7 +84,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="nav-header">Family Teams</li>
                 <li class="nav-item">

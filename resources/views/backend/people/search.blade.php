@@ -11,11 +11,11 @@
 @endpush
 
 @push('page-styles')
-  <link rel="stylesheet" type="text/css" href="{{ asset('asset/dist/css/toggle.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/toastrjs/toastr.min.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/sweetalert2/sweetalert2.min.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('asset/plugins/select2/css/select2.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  {{-- <link rel="stylesheet" type="text/css" href="{{ asset('asset/dist/css/toggle.css')}}"> --}}
+  {{-- <link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/toastrjs/toastr.min.css')}}"> --}}
+  {{-- <link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/sweetalert2/sweetalert2.min.css')}}"> --}}
+  {{-- <link rel="stylesheet" type="text/css" href="{{ asset('asset/plugins/select2/css/select2.min.css') }}"> --}}
+  {{-- <link rel="stylesheet" type="text/css" href="{{ asset('asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"> --}}
   <style>
     input.ace-switch.ace-switch-yesno:checked::before {
       content: "Yes";
@@ -181,8 +181,8 @@
   <script src="{{ asset('asset/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('asset/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
   <!-- date-range-picker -->
-  <script src="{{ asset('asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
-  <script src="{{ asset('asset/plugins/select2/js/select2.full.min.js') }}"></script>
+  {{-- <script src="{{ asset('asset/plugins/daterangepicker/daterangepicker.js') }}"></script> --}}
+  {{-- <script src="{{ asset('asset/plugins/select2/js/select2.full.min.js') }}"></script> --}}
   <script>
     $(document).ready(function() {
       $('#team-switch').change(function() {
@@ -335,15 +335,5 @@
       }
       $(showName).text(fileInput.files[0].name)
     };
-  </script>
-  <script>
-    $(function () {
-        $('.select2').select2()
-
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-        theme: 'bootstrap4'
-        })
-    });
   </script>
 @endpush

@@ -1,6 +1,6 @@
 <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="section-title mb-0">Family</h4>
-    <div class="dropdown">
+    <h4 class="section-title mr-auto">Family</h4>
+    <div class="dropdown ml-auto">
       <button class="btn btn-tool dropdown-toggle" type="button" id="familyDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bars"></i>
       </button>
@@ -19,10 +19,10 @@
   <div class="card-body">
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        Father 
+        Father
         @if($person->father)
             <a target="_blank" href="{{ route('admin.peoples.show', $person->father->id) }}">
-                {{ $person->father->firstname }} {{ $person->father->lastname }} 
+                {{ $person->father->firstname }} {{ $person->father->lastname }}
             </a>
             <span>{{ $person->father->sex == 'm' ? '♂' : '♀' }}</span>
         @else
@@ -30,15 +30,15 @@
         @endif
         @if(!$person->father)
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#existingFatherCrudObjectModal">
-            <i class="fas fa-star"></i> 
+            <i class="fas fa-star"></i>
         </a>
         @endif
     </li>
     <li class="list-group-item">
-        Mother 
+        Mother
         @if($person->mother)
             <a target="_blank" href="{{ route('admin.peoples.show', $person->mother->id) }}">
-                {{ $person->mother->firstname }} {{ $person->mother->lastname }} 
+                {{ $person->mother->firstname }} {{ $person->mother->lastname }}
             </a>
             <span>{{ $person->mother->sex == 'm' ? '♂' : '♀' }}</span>
         @else
@@ -66,10 +66,10 @@
             <span>No parents recorded</span>
         @endif
     </li>
-    
+
     <li class="list-group-item">
         Partner
-       
+
     </li>
     </ul>
   </div>

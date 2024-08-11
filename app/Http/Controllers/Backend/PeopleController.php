@@ -228,7 +228,7 @@ class PeopleController extends Controller
             })
             ->where('id', '!=', $person->id)
             ->get();
-        
+
         if ($request->ajax()) {
             $crudRoutePath = $this->crudRoutePath;
             $view = view('backend.people.partials.people-profiles', compact('person', 'crudRoutePath', 'siblings'))->render();
@@ -395,10 +395,10 @@ class PeopleController extends Controller
 
         if (($key = array_search($photoName, $photos)) !== false) {
             unset($photos[$key]);
-    
+
             // Delete the photo file from the storage
             Storage::disk('public')->delete('photos/' . $teamName . '/' . $photoName);
-    
+
             $person->photo = json_encode(array_values($photos));
             $person->save();
         }
@@ -430,10 +430,10 @@ class PeopleController extends Controller
         if (($key = array_search($photoName, $photos)) !== false) {
             // Remove the photo from its current position
             unset($photos[$key]);
-    
+
             // Re-insert the photo at the beginning of the array
             array_unshift($photos, $photoName);
-    
+
             // Save the updated photos array back to the person record
             $person->photo = json_encode(array_values($photos));
             $person->save();
@@ -492,7 +492,7 @@ class PeopleController extends Controller
         return view('backend.people.show', compact('person', 'crudRoutePath', 'genders', 'persons', 'countries', 'couples', 'siblings', 'ancestorData', 'descendantData'));
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -574,7 +574,7 @@ class PeopleController extends Controller
         if ($request->filled('child_id')) {
             $child = Person::findOrFail($request->child_id);
             $child->father_id = $father->id;
-            
+
             // Update or create couple if mother exists
             if ($child->mother_id) {
                 $couple = Couple::updateOrCreate(
@@ -584,7 +584,7 @@ class PeopleController extends Controller
 
                 $child->parents_id = $couple->id;
             }
-            
+
             $child->save();
         }
 
@@ -714,17 +714,17 @@ class PeopleController extends Controller
         if ($request->filled('child_id')) {
             $child = Person::findOrFail($request->child_id);
             $child->mother_id = $mother->id;
-            
+
             // Update or create couple if father exists
             if ($child->father_id) {
                 $couple = Couple::updateOrCreate(
                     ['person1_id' => $child->father_id, 'person2_id' => $mother->id],
                     ['team_id' => $child->team_id]
                 );
-    
+
                 $child->parents_id = $couple->id;
             }
-            
+
             $child->save();
         }
 
@@ -948,7 +948,7 @@ class PeopleController extends Controller
         })
         ->where('id', '!=', $person->id)
         ->get();
-        
+
         return view('backend.people.partials.siblings', compact('siblings'))->render();
     }
 
@@ -1007,6 +1007,60 @@ class PeopleController extends Controller
         $person = Person::with('father', 'mother')->findOrFail($id);
 
         return view('backend.people.chart', compact('crudRoutePath', 'person'));
+    }
+    public function storePartner(Request $request)
+    {
+        $rules = [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name'  => ['required', 'string', 'max:255'],
+            'sex'        => ['required', 'string', 'max:1'],
+            'dob'        => ['nullable', 'date'],
+            'yob'        => ['nullable', 'integer'],
+            'pob'        => ['nullable', 'string', 'max:255'],
+            'photo'      => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'team_id'    => ['required', 'exists:teams,id'], // Add this line to validate team_id
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error'  => $validator->errors()->toArray()
+            ]);
+        }
+        $partner = new Person;
+        $partner->firstname = $request->first_name;
+        $partner->lastname  = $request->last_name;
+        $partner->birthname = $request->birth_name;
+        $partner->nickname  = $request->nick_name;
+        $partner->sex       = $request->sex;
+        $partner->dob       = $request->dob;
+        $partner->yob       = $request->yob;
+        $partner->pob       = $request->pob;
+        $partner->team_id   = $request->team_id;
+        if ($request->hasFile('photo')) {
+            $team = Team::findOrFail($request->team_id);
+            $teamDirectory = 'photos/' . $team->name;
+
+            $image = $request->file('photo');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $filePath = $image->storeAs($teamDirectory, $name, 'public');
+            $partner->photo = json_encode([$name]);
+        }
+        $partner->save();
+        if($partner){
+            Couple::CreateOrUpdate([
+                'person1_id' => $partner->id,
+                'person2_id' => $request->partner_id,
+                'team_id' => $request->team_id
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'success' => 'Mother has been added successfully!',
+            'data' => $partner,
+            'familyHtml' => $familyHtml
+        ]);
     }
 
 }
