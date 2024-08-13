@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
-        <img src="{{ asset('asset') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle "
+        <img src="{{ asset('storage/' . $web_config['logo'] ?? 'images/no_image_available.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle "
         style="opacity: .8; width:100%;height:100px;object-fit:contain;max-height:74px;margin-left:0;">
     </a>
     <!-- Sidebar -->
@@ -10,8 +10,8 @@
         <nav class="mt-5">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link @if(request()->routeIs('admin.dashboard')) active @endif">
+                        <i class="nav-icon fa fa-home"></i>
                         <p>
                             ផ្ទាំងគ្រប់គ្រង
                             {{-- <span class="right badge badge-danger">New</span> --}}
@@ -21,9 +21,9 @@
 
                 <li class="nav-item @if(request()->routeIs('admin.users*', 'admin.roles*','admin.permissions*')) menu-is-opening menu-open  @endif">
                     <a href="{{ route('admin.users.index') }}" class="nav-link @if(request()->routeIs('admin.users*')) active @endif">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fa fa-group"></i>
                         <p>
-                            Manage Users
+                            គ្រប់គ្រងអ្នកប្រើប្រាស់
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -131,20 +131,22 @@
 
                 <li class="nav-item">
                     <a href="{{route('admin.people.birthCertificate')}}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fa fa-vcard-o"></i>
                         <p>
                             សំបុត្រកំណើរ
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                @can('view_setting')
+                <li class="nav-item @if(request()->routeIs('admin.setting*')) menu-is-opening menu-open  @endif">
+                    <a href="{{ route('admin.setting.index') }}" class="nav-link @if(request()->routeIs('admin.setting*')) active @endif">
+                        <i class="nav-icon fas fa-cog"></i>
                         <p>
                             ការកំណត់
                         </p>
                     </a>
                 </li>
+                @endcan
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

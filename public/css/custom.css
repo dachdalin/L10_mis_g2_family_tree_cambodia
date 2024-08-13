@@ -1,5 +1,19 @@
+:root{
+    --global-color: #f8f9fa;
+    --global-color-hover: #e9ecef;
+    --global-color-active: #0cb4f2;
+}
+@font-face {
+    font-family: 'Hanuman','khmer OS Battambang';
+    src: url('public/asset/fonts/Hanuman-Regular.ttf') format('ttf');
+    src: url('public/asset/fonts/KhmerOSbattambang.ttf') format('ttf');
+}
 
-body
-{
-    font-family: 'Hanuman', sans-serif !important;
+@font-face {
+    font-family: 'Khmer OS Battambang';
+    src: url('public/asset/fonts/KhmerOSbattambang.ttf') format('ttf');
+}
+
+body{
+    font-family: 'Hanuman','khmer OS Battambang' !important;
 }

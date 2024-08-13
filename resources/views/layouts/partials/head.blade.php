@@ -4,7 +4,20 @@
      {{-- If runing with ngrok --}}
      <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="base-url" content="{{ url('/') }}">
+    <meta name="title" content="@yield('meta_title', $web_config['meta_title'])">
+    <meta name="author" content="@yield('author', $web_config['meta_author'])">
+    <meta name="keywords" content="@yield('keywords', $web_config['meta_keywords'])">
+    <meta name="description" content="@yield('description', $web_config['meta_description'])">
+    <meta name="robots" content="index, follow">
+    <meta name="image" content="@yield('image', asset('storage/'.$web_config['meta_image'] ?? ''))">
+
+    <link rel="shortcut icon" href="{{ asset('storage/'.$web_config['favicon'] ?? '') }}">
+    <link rel="apple-touch-icon" href="{{ asset('storage/'.$web_config['favicon'] ?? '') }}">
+    <link rel="favicon" href="{{ asset('storage/'.$web_config['favicon'] ?? '') }}">
+
     <title>@yield('title')</title>
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset/plugins/fontawesome-free/css/all.min.css') }}">
@@ -40,8 +53,8 @@
         type="text/css" media="screen" />
 
 
-    
-        
+
+
 
     @stack('css')
     @stack('page-styles')

@@ -54,8 +54,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::post('districts/restore/{id}',[App\Http\Controllers\Backend\DistrictController::class,'restore'])->name('districts.restore');
     Route::post('districts/restore_all',[App\Http\Controllers\Backend\DistrictController::class,'restore_all'])->name('districts.restoreAll');
     Route::resource('districts', App\Http\Controllers\Backend\DistrictController::class)->except('create','update');
-    
-    
+
+
     // -----------------------------------------------------------------------------------------------
     // profile
     // -----------------------------------------------------------------------------------------------
@@ -100,12 +100,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         // Route::get('peoples/get-existing-persons', 'getExistingPersons')->name('people.getExistingPersons');
         Route::post('peoples/store-mother', 'storeMother')->name('people.storeMother');
         Route::post('peoples/select-existing-mother', 'selectExistingMother')->name('people.selectExistingMother');
-        
+
         Route::post('people/updateFamily', 'updateFamily')->name('people.updateFamily');
-        
+
         Route::post('peoples/store-partner', 'storePartner')->name('people.storePartner');
         Route::post('peoples/select-existing-partner', 'selectExistingPartner')->name('people.selectExistingPartner');
-        
+
         Route::post('peoples/store-child', 'storeChild')->name('people.storeChild');
         Route::post('peoples/select-existing-child', 'selectExistingChild')->name('people.selectExistingChild');
 
@@ -152,7 +152,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     });
 
-
+    Route::controller(App\Http\Controllers\Backend\SettingController::class)->group(function () {
+        Route::get('settings', 'index')->name('setting.index');
+        Route::post('settings/update', 'update')->name('setting.update');
+    });
 
 
 });
