@@ -1,9 +1,17 @@
 @extends('layouts.app')
+@push('page-styles')
 
+<style>
+    .auth-logo {
+        width: 200px;
+        height: 200px;
+    }
+</style>
+@endpush
 @section('content')
-<div class="container">
-    <div class="row justify-content-center align-item-center">
-        <div class="col-12 col-md-4">
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;" >
+    <div class="row">
+        <div class="col-12 col-md-12">
             <div class="card">
                 <div class="card-header bg-primary">{{ __('Login') }}</div>
 
