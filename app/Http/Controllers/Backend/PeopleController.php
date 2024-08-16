@@ -855,7 +855,7 @@ class PeopleController extends Controller
 
 
     /*====== end add new person as mother ======*/
-    
+
     /*====== Add partner ======*/
     public function storePartner(Request $request)
     {
@@ -1246,59 +1246,6 @@ class PeopleController extends Controller
 
         return view('backend.people.chart', compact('crudRoutePath', 'person'));
     }
-    public function storePartner(Request $request)
-    {
-        $rules = [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name'  => ['required', 'string', 'max:255'],
-            'sex'        => ['required', 'string', 'max:1'],
-            'dob'        => ['nullable', 'date'],
-            'yob'        => ['nullable', 'integer'],
-            'pob'        => ['nullable', 'string', 'max:255'],
-            'photo'      => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'team_id'    => ['required', 'exists:teams,id'], // Add this line to validate team_id
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 400,
-                'error'  => $validator->errors()->toArray()
-            ]);
-        }
-        $partner = new Person;
-        $partner->firstname = $request->first_name;
-        $partner->lastname  = $request->last_name;
-        $partner->birthname = $request->birth_name;
-        $partner->nickname  = $request->nick_name;
-        $partner->sex       = $request->sex;
-        $partner->dob       = $request->dob;
-        $partner->yob       = $request->yob;
-        $partner->pob       = $request->pob;
-        $partner->team_id   = $request->team_id;
-        if ($request->hasFile('photo')) {
-            $team = Team::findOrFail($request->team_id);
-            $teamDirectory = 'photos/' . $team->name;
-
-            $image = $request->file('photo');
-            $name = time() . '.' . $image->getClientOriginalExtension();
-            $filePath = $image->storeAs($teamDirectory, $name, 'public');
-            $partner->photo = json_encode([$name]);
-        }
-        $partner->save();
-        if($partner){
-            Couple::CreateOrUpdate([
-                'person1_id' => $partner->id,
-                'person2_id' => $request->partner_id,
-                'team_id' => $request->team_id
-            ]);
-        }
-        return response()->json([
-            'status' => 200,
-            'success' => 'Mother has been added successfully!',
-            'data' => $partner,
-            'familyHtml' => $familyHtml
-        ]);
-    }
+    
 
 }
