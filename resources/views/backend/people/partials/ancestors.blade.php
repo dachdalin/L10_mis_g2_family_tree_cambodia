@@ -139,7 +139,7 @@
 
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="section-title mb-0">Ancestors</h4>
+        <h4 class="section-title mb-0">ដូនតា Ancestors</h4>
         <div class="input-group">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" type="button" onclick="changeAncestorLevel(-1)">-</button>

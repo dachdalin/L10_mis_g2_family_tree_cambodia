@@ -132,7 +132,7 @@
 
 <div class="card card-ancestors-descendants">
     <div class="card-header card-ancestors-descendants-header d-flex justify-content-between align-items-center">
-        <h4 class="section-title mb-0">Descendants</h4>
+        <h4 class="section-title mb-0">កូចចៅ Descendants</h4>
         <div class="input-group">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" type="button" onclick="changeDescendantLevel(-1)">-</button>
@@ -236,97 +236,78 @@
                             </figcaption>
                         </figure>
                     </a>
-                    @if ($person->partner)
-                    <a href="{{ route('admin.peoples.show', $person->partner->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
-                        <figure class="w-16">
-                            <div class="user-image">
-                                <img src="{{ $person->partner->photo ? Storage::url('photos/' . $person->partner->team->name . '/' . json_decode($person->partner->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
-                            </div>
-                            <figcaption class="text-primary-500 dark:text-primary-300 text-xs">
-                                {{ $person->partner->firstname ?? '' }} {{ $person->partner->lastname ?? '' }}
-                            </figcaption>
-                        </figure>
-                    </a>
+        
+                    <!-- Iterate through all partners of the person -->
+                    @if ($person->partner->isNotEmpty())
+                        @foreach ($person->partner as $partner)
+                            <a href="{{ route('admin.peoples.show', $partner->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
+                                <figure class="w-16">
+                                    <div class="user-image">
+                                        <img src="{{ $partner->photo ? Storage::url('photos/' . $partner->team->name . '/' . json_decode($partner->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
+                                    </div>
+                                    <figcaption class="text-primary-500 dark:text-primary-300 text-xs">
+                                        {{ $partner->firstname ?? '' }} {{ $partner->lastname ?? '' }}
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        @endforeach
                     @endif
+        
                     <!-- Children generation -->
                     @if ($person->children->isNotEmpty())
-                    <ul>
-                        @foreach ($person->children as $child)
-                        <li>
-                            <a href="{{ route('admin.peoples.show', $child->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
-                                <figure class="w-16">
-                                    <div class="user-image">
-                                        <img src="{{ $child->photo ? Storage::url('photos/' . $child->team->name . '/' . json_decode($child->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
-                                    </div>
-                                    <figcaption class="text-primary-500 dark:text-primary-300 text-xs">
-                                        {{ $child->firstname }} {{ $child->lastname }}
-                                    </figcaption>
-                                </figure>
-                            </a>
-                            @if ($child->partner)
-                            <a href="{{ route('admin.peoples.show', $child->partner->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
-                                <figure class="w-16">
-                                    <div class="user-image">
-                                        <img src="{{ $child->partner->photo ? Storage::url('photos/' . $child->partner->team->name . '/' . json_decode($child->partner->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
-                                    </div>
-                                    <figcaption class="text-primary-500 dark:text-primary-300 text-xs">
-                                        {{ $child->partner->firstname ?? '' }} {{ $child->partner->lastname ?? '' }}
-                                    </figcaption>
-                                </figure>
-                            </a>
-                            @endif
-                            @if ($child->children->isNotEmpty())
-                            <ul>
-                                @foreach ($child->children as $grandchild)
+                        <ul>
+                            @foreach ($person->children as $child)
                                 <li>
-                                    <a href="{{ route('admin.peoples.show', $grandchild->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
+                                    <a href="{{ route('admin.peoples.show', $child->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
                                         <figure class="w-16">
                                             <div class="user-image">
-                                                <img src="{{ $grandchild->photo ? Storage::url('photos/' . $grandchild->team->name . '/' . json_decode($grandchild->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
+                                                <img src="{{ $child->photo ? Storage::url('photos/' . $child->team->name . '/' . json_decode($child->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
                                             </div>
                                             <figcaption class="text-primary-500 dark:text-primary-300 text-xs">
-                                                {{ $grandchild->firstname }} {{ $grandchild->lastname }}
+                                                {{ $child->firstname }} {{ $child->lastname }}
                                             </figcaption>
                                         </figure>
                                     </a>
+        
+                                    <!-- Iterate through all partners of the child -->
+                                    @if ($child->partner->isNotEmpty())
+                                        @foreach ($child->partner as $childPartner)
+                                            <a href="{{ route('admin.peoples.show', $childPartner->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
+                                                <figure class="w-16">
+                                                    <div class="user-image">
+                                                        <img src="{{ $childPartner->photo ? Storage::url('photos/' . $childPartner->team->name . '/' . json_decode($childPartner->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
+                                                    </div>
+                                                    <figcaption class="text-primary-500 dark:text-primary-300 text-xs">
+                                                        {{ $childPartner->firstname ?? '' }} {{ $childPartner->lastname ?? '' }}
+                                                    </figcaption>
+                                                </figure>
+                                            </a>
+                                        @endforeach
+                                    @endif
+        
+                                    <!-- Grandchildren generation -->
+                                    @if ($child->children->isNotEmpty())
+                                        <ul>
+                                            @foreach ($child->children as $grandchild)
+                                                <li>
+                                                    <a href="{{ route('admin.peoples.show', $grandchild->id) }}" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit">
+                                                        <figure class="w-16">
+                                                            <div class="user-image">
+                                                                <img src="{{ $grandchild->photo ? Storage::url('photos/' . $grandchild->team->name . '/' . json_decode($grandchild->photo, true)[0]) : asset('images/no_image_available.jpg') }}" class="w-full rounded shadow-lg dark:shadow-black/30">
+                                                            </div>
+                                                            <figcaption class="text-primary-500 dark:text-primary-300 text-xs">
+                                                                {{ $grandchild->firstname }} {{ $grandchild->lastname }}
+                                                            </figcaption>
+                                                        </figure>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 </li>
-                                @endforeach
-                            </ul>
-                            @endif
-                        </li>
-                        @endforeach
-                    </ul>
+                            @endforeach
+                        </ul>
                     @endif
-                    {{-- <ul>
-                        <li>
-                            <a href="/people/19" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" title="Female">
-                                <figure class="w-24">
-                                    <div class="user-image">
-                                            <img src="https://genealogy.kreaweb.be/storage/photos-096/3/19_001_demo.webp" class="w-full rounded shadow-lg dark:shadow-black/30" alt="19" />
-
-                                    </div>
-
-                                    <figcaption class="text-primary-500 dark:text-primary-300">
-                                        Beatrice Princess of York
-                                    </figcaption>
-                                </figure>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/people/20" class="text-blue-600 dark:text-blue-200 underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" title="Female">
-                                <figure class="w-24">
-                                    <div class="user-image">
-                                            <img src="https://genealogy.kreaweb.be/storage/photos-096/3/20_001_demo.webp" class="w-full rounded shadow-lg dark:shadow-black/30" alt="20" />
-
-                                    </div>
-
-                                    <figcaption class="text-primary-500 dark:text-primary-300">
-                                        Eugenie Princess of York
-                                    </figcaption>
-                                </figure>
-                            </a>
-                        </li>
-                    </ul> --}}
                 </li>
             </ul>
         </div>

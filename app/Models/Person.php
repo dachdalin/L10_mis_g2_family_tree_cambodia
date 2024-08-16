@@ -80,6 +80,23 @@ class Person extends Model
         return $this->hasMany(Couple::class, 'person1_id')->orWhere('person2_id', $this->id);
     }
 
+    // Relation for partner
+    public function partner()
+    {
+        return $this->belongsToMany(Person::class, 'couples', 'person1_id', 'person2_id')
+                    ->withPivot('date_start', 'date_end', 'is_married', 'has_ended');
+    }
+    
+    public function currentPartner()
+    {
+        return $this->belongsToMany(Person::class, 'couples', 'person1_id', 'person2_id')
+                    ->withPivot('date_start', 'date_end', 'is_married', 'has_ended')
+                    ->wherePivot('has_ended', false)
+                    ->first();
+    }
+
+
+
     public function children()
     {
         return $this->hasMany(Person::class, 'parents_id');
