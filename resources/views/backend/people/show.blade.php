@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 
   <!-- daterange picker -->
-  <link rel="stylesheet" href="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.css">
+  {{-- <link rel="stylesheet" href="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.css"> --}}
 @endpush
 
 @push('page-styles')
@@ -104,7 +104,7 @@
         <div class="card" id="profiles">
 
           @include('backend.people.partials.people-profiles', ['crudRoutePath' => $crudRoutePath])
-          
+
         </div>
       </div>
     </div>
@@ -115,7 +115,7 @@
 
   {{-- Modal for edit contact --}}
   @include('backend.people.templates.crudContactModal')
-  
+
   {{-- Modal for edit death --}}
   @include('backend.people.templates.crudDeathModal')
 
@@ -159,7 +159,7 @@
 <script src="{{asset('asset')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <!-- date-range-picker -->
-<script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script>
+{{-- <script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script> --}}
 
 <script>
   $(function () {
@@ -304,40 +304,40 @@
         modal.find('.modal-title').html('Edit Profile');
         $.get(actionUrl, function (res) {
             // console.log('Received response:', res); // Debugging
-            
+
             var person = res.data;
             var photos = res.photos || [];
             var teamName = person.team.name;
             // console.log('Person data:', person); // Debugging
-            
+
             form.find('#object_id').val(person.id);
             // console.log('Setting firstname:', person.firstname); // Debugging
             form.find('#firstname').val(person.firstname);
-            
+
             // console.log('Setting lastname:', person.lastname); // Debugging
             form.find('#lastname').val(person.lastname);
-            
+
             // console.log('Setting birthname:', person.birthname); // Debugging
             form.find('#birthname').val(person.birthname);
-            
+
             // console.log('Setting nickname:', person.nickname); // Debugging
             form.find('#nickname').val(person.nickname);
-            
+
             // console.log('Setting yob:', person.yob); // Debugging
             form.find('#yob').val(person.yob);
-            
+
             // console.log('Setting dob:', person.dob); // Debugging
             form.find('#dob').val(person.dob);
-            
+
             // console.log('Setting pob:', person.pob); // Debugging
             form.find('#pob').val(person.pob);
-            
+
             if (person.sex === 'm') {
                 form.find('#sexM').prop('checked', true);
             } else {
                 form.find('#sexF').prop('checked', true);
             }
-            
+
             form.find('#gender_id').val(person.gender_id).trigger('change');
 
             if (photos.length > 0) {
@@ -346,13 +346,13 @@
             } else {
                 form.find('#showPhoto').attr('src', '{{ asset('images/no_image_available.jpg') }}');
             }
-            
+
             // if (person.photo) {
             //     form.find('#showPhoto').attr('src', '{{ asset('images') }}/' + person.photo);
             // } else {
             //     form.find('#showPhoto').attr('src', '{{ asset('images/no_image_available.jpg') }}');
             // }
-            
+
             // form.attr('action', '{{ route('admin.peoples.store') }}');
             modal.modal('show');
         });
@@ -532,7 +532,7 @@
     // end person Death
 
 
-  
+
 
     /*====== for edit person multiple photo images ======*/
     $('body').on('click', '#editPhotos', function (e) {
@@ -572,7 +572,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     ${isPrimary ? `
                                                         <button type="button" title="Primary" class="btn btn-primary btn-sm set-primary" data-id="${photo}" disabled>
-                                                            <i class="fas fa-star"></i> 
+                                                            <i class="fas fa-star"></i>
                                                         </button>` : `
                                                         <button type="button" title="Set as primary" class="btn btn-primary btn-sm set-primary" data-id="${photo}">
                                                             <i class="fas fa-star"></i>
@@ -653,14 +653,14 @@
                                             <div class="d-flex justify-content-between">
                                                 ${isPrimary ? `
                                                     <button type="button" title="Primary" class="btn btn-primary btn-sm set-primary" data-id="${photo}" disabled>
-                                                        <i class="fas fa-star"></i> 
+                                                        <i class="fas fa-star"></i>
                                                     </button>` : `
                                                     <button type="button" title="Set as primary" class="btn btn-primary btn-sm set-primary" data-id="${photo}">
                                                         <i class="fas fa-star"></i>
                                                     </button>`
                                                 }
                                                 <a href="{{ Storage::url("photos/") }}${teamName}/${photo}" download class="btn btn-secondary btn-sm">
-                                                    <i class="fas fa-download"></i> 
+                                                    <i class="fas fa-download"></i>
                                                 </a>
                                                 <button type="button" title="Delete" class="btn btn-danger btn-sm delete-photo" data-id="${photo}">
                                                     <i class="fas fa-trash-alt"></i>
@@ -762,14 +762,14 @@
                                                 <div class="d-flex justify-content-between">
                                                     ${isPrimary ? `
                                                         <button type="button" title="Primary" class="btn btn-primary btn-sm set-primary" data-id="${photo}" disabled>
-                                                            <i class="fas fa-star"></i> 
+                                                            <i class="fas fa-star"></i>
                                                         </button>` : `
                                                         <button type="button" title="Set as primary" class="btn btn-primary btn-sm set-primary" data-id="${photo}">
                                                             <i class="fas fa-star"></i>
                                                         </button>`
                                                     }
                                                     <a href="{{ Storage::url("photos/") }}${teamName}/${photo}" download class="btn btn-secondary btn-sm">
-                                                        <i class="fas fa-download"></i> 
+                                                        <i class="fas fa-download"></i>
                                                     </a>
                                                     <button type="button" title="Delete" class="btn btn-danger btn-sm delete-photo" data-id="${photo}">
                                                         <i class="fas fa-trash-alt"></i>
@@ -1415,7 +1415,7 @@
 
 
 
-      
+
 
       $('#btnObjectClose').on('click',function(e){
         e.preventDefault();

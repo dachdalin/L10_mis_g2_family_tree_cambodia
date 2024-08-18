@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 
   <!-- daterange picker -->
-  <link rel="stylesheet" href="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.css">
+  {{-- <link rel="stylesheet" href="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.css"> --}}
 @endpush
 
 @push('page-styles')
@@ -91,12 +91,12 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">DataTable with default features</h3>
-            @include('backend.people.people_buttons')                        
+            @include('backend.people.people_buttons')
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            
+
             <div class="row">
               <div class="col-sm-12">
                 <table class="family-chart">
@@ -173,7 +173,7 @@
 <script src="{{asset('asset')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <!-- date-range-picker -->
-<script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script>
+{{-- <script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script> --}}
 
 <script>
   $(function () {
@@ -301,7 +301,7 @@
             });
         });
 
-      
+
 
 
       $('#btnObjectClose').on('click',function(e){

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 
   <!-- daterange picker -->
-  <link rel="stylesheet" href="{{ asset('asset/plugins/daterangepicker/daterangepicker.css')}}">
+  {{-- <link rel="stylesheet" href="{{ asset('asset/plugins/daterangepicker/daterangepicker.css')}}"> --}}
 @endpush
 
 @push('page-styles')
@@ -234,8 +234,8 @@
 @endpush
 
 @push('page-scripts')
-  <script src="{{ asset('asset/vendors/toastrjs/toastr.min.js') }}"></script>
-  <script src="{{ asset('asset/vendors/sweetalert2/sweetalert2.all.min.js') }}"></script>
+  {{-- <script src="{{ asset('asset/vendors/toastrjs/toastr.min.js') }}"></script>
+  <script src="{{ asset('asset/vendors/sweetalert2/sweetalert2.all.min.js') }}"></script> --}}
   <script>
     $(document).ready(function () {
       $.ajaxSetup({

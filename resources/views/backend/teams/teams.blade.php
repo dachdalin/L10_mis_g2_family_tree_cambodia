@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 
   <!-- daterange picker -->
-  <link rel="stylesheet" href="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.css">
+  {{-- <link rel="stylesheet" href="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.css"> --}}
 @endpush
 
 @push('page-styles')
@@ -96,7 +96,7 @@
       <div class="col-12">
 
         <div class="card">
-          
+
           <div class="card-header">
             <h3 class="card-title">DataTable with default features</h3>
           </div>
@@ -196,7 +196,7 @@
                                         <h4 class="section-title mb-0">Owner :</h4>
                                     </div>
 
-                                    
+
                                     <div class="card-body">
                                         <span>Please provide the email address of the new user you would like to add to this team.
                                             Then select the role for the new user.</span>
@@ -226,14 +226,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    
-                                    
+
+
+
                                     <div class="card-footer text-right">
                                         <button type="button" class="btn btn-primary">Add</button>
                                     </div>
                                 </div>
-                                
+
 
                             </div>
 
@@ -269,7 +269,7 @@
 <script src="{{asset('asset')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <!-- date-range-picker -->
-<script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script>
+{{-- <script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script> --}}
 
 <script>
 
@@ -294,7 +294,7 @@ $(document).ready(function() {
         format: 'L'
     });
 
-    
+
 
 
     $("#example1").DataTable({
@@ -400,7 +400,7 @@ $(document).ready(function() {
           }
         });
       });
-      
+
 
 
       $('#btnObjectClose').on('click',function(e){

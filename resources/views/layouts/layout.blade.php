@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('layouts.partials.head')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
 
     <!-- Site wrapper -->
@@ -16,7 +15,6 @@
             <section class="content-header">
                 @yield('breadcrumb')
               </section>
-
             <section class="content">
                 @yield('content')
             </section>

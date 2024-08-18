@@ -29,15 +29,11 @@
 <script src="{{ asset('asset/plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('asset/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 <script src="{{ asset('asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- Datepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-{{-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --}}
 {{-- summernote --}}
 <script src="{{ asset('asset/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
 <!-- Bootstrap Switch -->
-<script src="{{asset('asset')}}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="{{ asset('asset') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
@@ -53,7 +49,6 @@
 
 
 <script src="{{ asset('asset/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-<script src="{{ asset('asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script>
     $(document).ready(function() {
         // var success_audio = "{{ URL::asset('sound/success.wav') }}";
@@ -89,15 +84,23 @@
 
     });
 </script>
-<script>
-$(function () {
-    $('.select2').select2()
+{{-- <script type="text/javascript">
+    $(document).ready(function() {
+        $('.datetimepicker').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script> --}}
+<script type="text/javascript">
+    $(function() {
+        $('.select2').select2()
 
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
     })
-});
 </script>
 @stack('js')
 @stack('vendor-scripts')

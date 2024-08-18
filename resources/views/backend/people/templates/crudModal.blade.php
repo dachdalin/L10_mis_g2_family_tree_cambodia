@@ -81,7 +81,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="dob" class="form-control-label mb-1">Date of birth:</label>
-                <input id="dob" name="dob" class="form-control" type="date">
+                <input id="dob" name="dob" class="form-control datetimepicker" type="date">
                 <span class="text-danger error-text dob_error"></span>
               </div>
             </div>

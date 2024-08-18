@@ -60,7 +60,7 @@
       <div class="col-12">
 
         <div class="card">
-          
+
           <div class="card-header">
             <h3 class="card-title">DataTable with default features</h3>
               {{-- @include('backend.people.people_buttons')             --}}
@@ -145,7 +145,7 @@
                                     </div>
                                 </div>
                             </header>
-                    
+
                             <section class="main-form">
                                 <h2>សំបុត្រកំណើត</h2>
                                 <table>
@@ -200,7 +200,7 @@
                                     </tr>
                                 </table>
                             </section>
-                    
+
                             <footer>
                                 <p>បច្ចុប្បន្នទីកន្លែងដំណឹង: ___________________</p>
                                 <p>ថ្ងៃ..........ខែ..........ឆ្នាំ..........</p>
@@ -242,7 +242,7 @@
 <script src="{{asset('asset')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <!-- date-range-picker -->
-<script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script>
+{{-- <script src="{{asset('asset')}}/plugins/daterangepicker/daterangepicker.js"></script> --}}
 
 <script>
   $(function () {
@@ -363,7 +363,7 @@
           }
         });
       });
-      
+
 
 
       $('#btnObjectClose').on('click',function(e){
