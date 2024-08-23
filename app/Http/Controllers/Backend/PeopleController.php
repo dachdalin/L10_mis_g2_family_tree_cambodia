@@ -1246,6 +1246,6 @@ class PeopleController extends Controller
 
         return view('backend.people.chart', compact('crudRoutePath', 'person'));
     }
-    
+
 
 }

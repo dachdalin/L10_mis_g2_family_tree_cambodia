@@ -37,16 +37,20 @@
         <link rel="stylesheet" href="{{ asset('asset') }}/plugins/daterangepicker/daterangepicker.css">
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('asset') }}/plugins/summernote/summernote-bs4.min.css">
+        <link rel="stylesheet" href="{{ asset('fonts/material-icon/css/material-design-iconic-font.min.css') }}">
+
+        <!-- Main css -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         @yield('page-styles')
     </head>
 <body>
-    <div id="app">
-        <main class="py-4">
-            @yield('content')
-        </main>
+    <div class="main">
+        @yield('content')
     </div>
     @include('layouts.partials.script')
 
     @yield('page-scripts')
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>

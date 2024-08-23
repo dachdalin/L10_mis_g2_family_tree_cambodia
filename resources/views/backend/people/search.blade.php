@@ -134,8 +134,9 @@
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group" data-select2-id="29">
-                    <label>Switch Family Team</label>
+                    <label for="team-switch">Switch Family Team</label>
                     <select class="form-control select2  select2-hidden-accessible" style="width: 100%;" id="team-switch"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                      <option value="all">All</option>
                       @foreach($teams as $team)
                         <option value="{{ $team->id }}" {{ $team->id == $active_team_id ? 'selected' : '' }}>
                           {{ $team->name }} {{ $team->id == $active_team_id ? '✔️' : '' }}
@@ -185,6 +186,7 @@
   {{-- <script src="{{ asset('asset/plugins/select2/js/select2.full.min.js') }}"></script> --}}
   <script>
     $(document).ready(function() {
+
       $('#team-switch').change(function() {
         var selectedTeamId = $(this).val();
         window.location.href = '{{ route('admin.people.search') }}?team_id=' + selectedTeamId;
@@ -208,9 +210,11 @@
 
     $(function() {
       // Initialize Select2 Elements
-      $('.select2').select2()
-      // Initialize Select2 Elements
-      $('.select2bs4').select2({ theme: 'bootstrap4' })
+      $('.select2').select2({
+        placeholder: 'Select an option'
+      });
+    //   // Initialize Select2 Elements
+    //   $('.select2bs4').select2({ theme: 'bootstrap4' })
       // Date picker
       $('#reservationdate').datetimepicker({ format: 'L' });
       $("#example1").DataTable({

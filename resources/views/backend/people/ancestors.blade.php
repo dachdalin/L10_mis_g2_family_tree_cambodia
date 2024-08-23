@@ -62,7 +62,7 @@
         <div class="card">
 
           <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <h3 class="card-title">Ancestors</h3>
             @include('backend.people.people_buttons')
           </div>
           <!-- /.card-header -->
@@ -100,7 +100,12 @@
 
             <div class="container mt-4">
               <div class="row">
-                  <div class="col-md-8">
+                <div class="col-12 col-md-12">
+                    <div id="ancestors-section">
+                        @include('backend.people.partials.ancestors', ['person' => $person])
+                      </div>
+                </div>
+                  {{-- <div class="col-md-8">
                       <div class="row">
 
                         <div class="col-md-6 mb-3">
@@ -128,7 +133,7 @@
                         </div>
 
                       </div>
-                  </div>
+                  </div> --}}
               </div>
             </div>
 

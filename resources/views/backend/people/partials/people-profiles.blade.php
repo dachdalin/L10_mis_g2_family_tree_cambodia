@@ -157,6 +157,14 @@
       font-size: 10px; /* Smaller font size */
       text-align: center;
   }
+  .profile-image {
+    width: 290px;
+    height: 328px;
+    aspect-ratio: 4 / 6;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 </style>
 
 <div class="card-header">
@@ -164,12 +172,11 @@
     @include('backend.people.people_buttons')
   </div>
 
-  <div class="card-body">
-    <div class="container mt-4">
-      <div class="row">
+  <div class="card-body p-3">
+      <div class="row justify-content-between">
 
-        <div class="col-md-4">
-          <div class="card profile-card">
+        <div class="col-md-5">
+          <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h3 class="card-title mb-0">Profile</h3>
               <div class="dropdown">
@@ -189,7 +196,7 @@
 
             <div id="profile-section" class="card-body text-center">
 
-                <div class="card position-relative">
+                <div class="position-relative d-flex justify-content-center align-items-center">
                     @if($person->dod)
                         <div class="banner">Deceased</div>
                     @else
@@ -203,13 +210,12 @@
                         $teamName = $person->team->name;
 
                       @endphp
-                      <img src="{{ Storage::url('photos/' . $teamName . '/' . $primaryPhoto) }}" title="{{ $person->firstname }} {{ $person->lastname }}" alt="{{ $person->firstname }} {{ $person->lastname }}" class="mb-3">
+                      <img src="{{ Storage::url('photos/' . $teamName . '/' . $primaryPhoto) }}" title="{{ $person->firstname }} {{ $person->lastname }}" alt="{{ $person->firstname }} {{ $person->lastname }}" class="mb-3 profile-image">
                     @else
                       <img src="{{ asset('images/no_image_available.jpg') }}" title="{{ $person->firstname }} {{ $person->lastname }}" alt="{{ $person->firstname }} {{ $person->lastname }}" class="mb-3">
                     @endif
-                    {{-- <img src="{{ $person->photo ? asset('images/' . $primaryPhoto) : asset('images/no_image_available.jpg') }}" title="{{ $person->firstname }} {{ $person->lastname }}" alt="{{ $person->firstname }} {{ $person->lastname }}" class="mb-3"> --}}
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between p-3">
                     {{-- person death the show both yob - dod --}}
                     <strong>
                         @if($person->dod)
@@ -226,72 +232,6 @@
                         <span>{{ \Carbon\Carbon::parse($person->yob . '-01-01')->age }} Years</span>
                     @endif
                 </div>
-
-                <table class="profile-info-table mt-3">
-                    <tbody>
-                        <tr>
-                            <td>First name</td>
-                            <td>{{ $person->firstname }}</td>
-                        </tr>
-                        <tr>
-                            <td>Surname</td>
-                            <td>{{ $person->lastname }}</td>
-                        </tr>
-                        <tr>
-                            <td>Birthname</td>
-                            <td>{{ $person->birthname }}</td>
-                        </tr>
-                        <tr>
-                            <td>Nickname</td>
-                            <td>{{ $person->nickname }}</td>
-                        </tr>
-                        <tr>
-                            <td>Sex (biological)</td>
-                            <td>{{ $person->sex == 'm' ? 'Male ♂' : 'Female ♀' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Gender identity</td>
-                            <td>Cis Male</td>
-                        </tr>
-                        <tr>
-                            <td>Date of birth</td>
-                            <td>{{ \Carbon\Carbon::parse($person->dob)->format('F j, Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td>Place of birth</td>
-                            <td>{{ $person->pob }}</td>
-                        </tr>
-                        @if($person->yod || $person->dod || $person->pod)
-                            <tr>
-                                <td>Date of death</td>
-                                <td>{{ \Carbon\Carbon::parse($person->dod)->format('F j, Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td>Place of death</td>
-                                <td>{{ $person->pod }}</td>
-                            </tr>
-                            <tr>
-                                <td>Cemetery</td>
-                                <td>
-                                    {{ $person->metadata->where('key', 'cemetery_location_name')->first()->value ?? '' }}
-                                    <br>
-                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $person->metadata->where('key', 'cemetery_location_latitude')->first()->value }},{{ $person->metadata->where('key', 'cemetery_location_longitude')->first()->value }}" target="_blank">
-                                        {{ $person->metadata->where('key', 'cemetery_location_address')->first()->value ?? '' }}
-                                    </a>
-                                </td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td>Address</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Phone</td>
-                                <td>{{ $person->phone }}</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
             </div>
 
             <style>
@@ -318,20 +258,94 @@
                     border-radius: 5px;
                 }
             </style>
-
-
           </div>
         </div>
 
-        <div class="col-md-8">
-          <div class="row">
+        <div class="col-12 col-md-7">
+            <div class="card">
+                <div class="card-header d-flex align-items-center justify-content-center">
+                    <h4 class="section-title mb-0">ព័ត៌មានផ្ទាល់ខ្លួន</h4>
+                </div>
+                <div class="card-body">
+                    <table class="profile-info-table mt-3">
+                        <tbody>
+                            <tr>
+                                <td>First name</td>
+                                <td>{{ $person->firstname }}</td>
+                            </tr>
+                            <tr>
+                                <td>Surname</td>
+                                <td>{{ $person->lastname }}</td>
+                            </tr>
+                            <tr>
+                                <td>Birthname</td>
+                                <td>{{ $person->birthname }}</td>
+                            </tr>
+                            <tr>
+                                <td>Nickname</td>
+                                <td>{{ $person->nickname }}</td>
+                            </tr>
+                            <tr>
+                                <td>Sex (biological)</td>
+                                <td>{{ $person->sex == 'm' ? 'Male ♂' : 'Female ♀' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender identity</td>
+                                <td>Cis Male</td>
+                            </tr>
+                            <tr>
+                                <td>Date of birth</td>
+                                <td>{{ \Carbon\Carbon::parse($person->dob)->format('F j, Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Place of birth</td>
+                                <td>{{ $person->pob }}</td>
+                            </tr>
+                            @if($person->yod || $person->dod || $person->pod)
+                                <tr>
+                                    <td>Date of death</td>
+                                    <td>{{ \Carbon\Carbon::parse($person->dod)->format('F j, Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Place of death</td>
+                                    <td>{{ $person->pod }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Cemetery</td>
+                                    <td>
+                                        {{ $person->metadata->where('key', 'cemetery_location_name')->first()->value ?? '' }}
+                                        <br>
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{ $person->metadata->where('key', 'cemetery_location_latitude')->first()->value }},{{ $person->metadata->where('key', 'cemetery_location_longitude')->first()->value }}" target="_blank">
+                                            {{ $person->metadata->where('key', 'cemetery_location_address')->first()->value ?? '' }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td>Address</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>{{ $person->phone }}</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-            <div class="col-md-6 mb-3">
+      </div><br>
 
-              <div class="card" id="family">
+      <div class="row">
+        <div class="col-12 col-md-3 col-lg-3">
+            <div class="card" id="family">
                 @include('backend.people.partials.family', ['person' => $person])
               </div>
-              <div class="card">
+        </div>
+        <div class="col-12 col-md-3 col-lg-3">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h4 class="section-title mr-auto">Partners</h4>
                   <div class="dropdown ml-auto">
@@ -348,60 +362,35 @@
                   <p>Nothing recorded.</p>
                 </div>
               </div>
-
-              <div class="card">
+        </div>
+        <div class="col-12 col-md-3 col-lg-3">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4 class="section-title mr-auto">Children</h4>
-                  <div class="dropdown ml-auto">
+                    <h4 class="section-title mr-auto">Children</h4>
+                    <div class="dropdown ml-auto">
                     <button class="btn btn-tool dropdown-toggle" type="button" id="childrenDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
+                        <i class="fas fa-bars"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="childrenDropdown">
-                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#childCrudObjectModal">Add child</a>
-                      <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#childCrudObjectModal">Add child</a>
+                        <div class="dropdown-divider"></div>
                     </div>
-                  </div>
+                    </div>
                 </div>
                 <div class="card-body">
-                  <p>Nothing recorded.</p>
+                    <p>Nothing recorded.</p>
                 </div>
-              </div>
-
-              <div class="card">
-                {{-- @include('backend.people.partials.siblings', ['siblings' => $siblings]) --}}
+            </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-3">
+            <div class="card">
                 <div id="siblings-section">
                   @include('backend.people.partials.siblings', ['siblings' => $siblings])
                 </div>
               </div>
-
-            </div>
-
-            <div class="col-md-6 mb-3">
-
-              {{-- card ancestors --}}
-              {{-- @include('backend.people.partials.ancestors', ['person' => $person]) --}}
-
-              {{-- card descendants --}}
-              {{-- @include('backend.people.partials.descendants', ['person' => $person]) --}}
-
-              {{-- card ancestors --}}
-              <div id="ancestors-section">
-                @include('backend.people.partials.ancestors', ['person' => $person])
-              </div>
-
-              {{-- card descendants --}}
-              <div id="descendants-section">
-                  @include('backend.people.partials.descendants', ['person' => $person])
-              </div>
-
-
-            </div>
-
-          </div>
         </div>
-
       </div>
-    </div>
+
   </div>
 
 

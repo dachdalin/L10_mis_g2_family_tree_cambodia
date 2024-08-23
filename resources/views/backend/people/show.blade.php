@@ -11,9 +11,9 @@
 @endpush
 
 @push('page-styles')
-  <link rel="stylesheet" type="text/css" href="{{asset('asset')}}/dist/css/toggle.css">
+  {{-- <link rel="stylesheet" type="text/css" href="{{asset('asset')}}/dist/css/toggle.css">
   <link rel="stylesheet" type="text/css" href="{{asset('asset')}}/vendors/toastrjs/toastr.min.css">
-  <link rel="stylesheet" type="text/css" href="{{asset('asset')}}/vendors/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('asset')}}/vendors/sweetalert2/sweetalert2.min.css"> --}}
   <style>
     .profile-card img {
       width: 100%;
@@ -198,8 +198,8 @@
 @endpush
 
 @push('page-scripts')
-  <script src="{{asset('asset')}}/vendors/toastrjs/toastr.min.js"></script>
-  <script src="{{asset('asset')}}/vendors/sweetalert2/sweetalert2.all.min.js"></script>
+  {{-- <script src="{{asset('asset')}}/vendors/toastrjs/toastr.min.js"></script>
+  <script src="{{asset('asset')}}/vendors/sweetalert2/sweetalert2.all.min.js"></script> --}}
 
   <script>
     $(document).ready(function () {
@@ -1151,6 +1151,7 @@
             },
             success: function (res) {
                 console.log('partner:' res);
+                // console.log('partner:' + res);
                 if (res.status === 400) {
                     $.each(res.error, function (prefix, val) {
                         $('span.' + prefix + '_error').text(val[0]);

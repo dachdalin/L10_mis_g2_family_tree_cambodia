@@ -1,6 +1,9 @@
 <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="section-title mb-0">Siblings</h4>
-    <div class="dropdown">
+    <h4 class="section-title mr-auto">Siblings</h4>
+    <div class="dropdown ml-auto">
+        <button class="btn btn-tool dropdown-toggle" type="button" id="childrenDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+        </button>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="siblingsDropdown">
         <a class="dropdown-item" href="#">Edit siblings</a>
         <div class="dropdown-divider"></div>
@@ -21,6 +24,7 @@
                     <span>{{ $sibling->sex == 'm' ? '♂' : '♀' }}</span>
                 </li>
             @endforeach
-        </ul>
+
+</ul>
     @endif
   </div>

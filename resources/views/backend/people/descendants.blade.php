@@ -100,7 +100,12 @@
 
             <div class="container mt-4">
               <div class="row">
-                  <div class="col-md-8">
+                <div class="col-12 col-md-12">
+                    <div id="descendants-section">
+                        @include('backend.people.partials.descendants', ['person' => $person])
+                    </div>
+                </div>
+                  {{-- <div class="col-md-8">
                       <div class="row">
 
                         <div class="col-md-6 mb-3">
@@ -128,7 +133,7 @@
                         </div>
 
                       </div>
-                  </div>
+                  </div> --}}
               </div>
             </div>
 
