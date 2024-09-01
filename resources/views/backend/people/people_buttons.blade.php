@@ -11,16 +11,16 @@
 <a href="{{ route('admin.people.chart', $person->id) }}" class="btn btn-info mx-1 float-right @if(request()->routeIs('admin.people.chart')) active @endif">
     <i class="fas fa-profile"></i> Family chart
 </a>
-<a class="btn btn-info mx-1 float-right">
+{{-- <a class="btn btn-info mx-1 float-right">
     <i class="fas fa-profile"></i> Files
-</a>
-<a class="btn btn-info mx-1 float-right">
+</a> --}}
+<a href="{{ route('admin.people.certificates', $person->id) }}" class="btn btn-info mx-1 float-right @if(request()->routeIs('admin.people.certificates')) active @endif">
     <i class="fas fa-profile"></i> សំបុត្រកំណើត
 </a>
 <a class="btn btn-info mx-1 float-right">
     <i class="fas fa-profile"></i> សៀវភៅស្នាក់នៅ
 </a>
-<a class="btn btn-info mx-1 float-right">
+{{-- <a class="btn btn-info mx-1 float-right">
     <i class="fas fa-profile"></i> History
-</a>
+</a> --}}
 

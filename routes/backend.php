@@ -113,6 +113,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
 
         Route::get('people/{person}/ancestors', 'ancestors')->name('people.ancestors');
+        Route::get('people/{person}/certificates', 'certificates')->name('people.certificates');
         Route::get('people/{person}/descendants', 'descendants')->name('people.descendants');
 
         Route::get('people/{id}/siblings', 'getSiblings')->name('people.getSiblings');

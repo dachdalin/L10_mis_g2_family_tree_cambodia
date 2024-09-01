@@ -53,7 +53,7 @@
 <div class="container-fluid">
     <form method="POST" action="{{ route('admin.setting.update') }}" enctype="multipart/form-data">
         @csrf
-        <div class="card">
+        <div class="card" hidden>
             <div class="card-header">
                 <h3 class="card-title">Global SEO</h3>
             </div>

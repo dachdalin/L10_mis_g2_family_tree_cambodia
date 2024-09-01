@@ -1177,6 +1177,11 @@ class PeopleController extends Controller
         return view('backend.people.descendants', compact('crudRoutePath', 'person'));
     }
 
+    public function certificates($id){
+        $crudRoutePath = $this->crudRoutePath;
+        $person = Person::with('father', 'mother')->findOrFail($id);
+        return view('backend.people.certificates', compact('crudRoutePath', 'person'));
+    }
     public function getSiblings($id)
     {
         $person = Person::findOrFail($id);

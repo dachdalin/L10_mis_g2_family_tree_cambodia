@@ -86,25 +86,25 @@
                     </ul>
                 </li> --}}
 
-                <li class="nav-header">Family Teams</li>
+                {{-- <li class="nav-header">Family Teams</li> --}}
                 <li class="nav-item">
                     <a href="{{ route('admin.people.search') }}" class="nav-link @if(request()->routeIs('admin.people.search')) active @endif">
                         <i class="nav-icon fas fa-search"></i>
                         <p>Team Lists</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-search"></i>
                         <p>Birthdays</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="{{ route('admin.peoples.show', "id") }}" class="nav-link @if(request()->routeIs('admin.people.show', "id")) active @endif">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Show person profile</p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item @if(request()->routeIs('admin.teams*')) menu-is-opening menu-open  @endif">
                     <a href="{{ route('admin.teams.index') }}" class="nav-link @if(request()->routeIs('admin.teams*')) active @endif">
                         <i class="nav-icon fas fa-copy"></i>
